@@ -1,0 +1,8 @@
+
+public class MovementRule implements FeaturePredicate {
+
+    @Override
+    public void isSatisfied() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+}
