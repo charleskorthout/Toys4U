@@ -1,22 +1,22 @@
 package Toys4U.Model;
 
 import Toys4U.Infrastructure.Digestion;
+import Toys4U.Infrastructure.EnergeticParticle;
 import Toys4U.Infrastructure.GranularDirection;
 import Toys4U.Infrastructure.MovingParticle;
-import java.util.List;
 
-public abstract class Animal extends Particle implements Digestion, MovingParticle {
+public abstract class Animal extends Particle implements Digestion, MovingParticle, EnergeticParticle {
 
     protected MovingParticle movement;
     protected Location location;
     private double weight;
     private double stamina;
-    private double energy;
+    protected double energy;
     private double velocity;
     private GranularDirection direction;
     
-    protected Animal() {
-        
+    protected Animal(int row, int column)  {
+        super(row,column);
     }
 
     public Location getLocation() {
@@ -43,11 +43,11 @@ public abstract class Animal extends Particle implements Digestion, MovingPartic
         this.stamina = stamina;
     }
 
-    public double getEnergy() {
+    public double getEnergyLevel() {
         return energy;
     }
 
-    public void setEnergy(double energy) {
+    public void setEnergyLevel(double energy) {
         this.energy = energy;
     }
 

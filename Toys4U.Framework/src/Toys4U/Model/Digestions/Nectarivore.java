@@ -10,4 +10,9 @@ package Toys4U.Model.Digestions;
  *
  * @author Charles Korthout
  */
-public abstract class Nectarivore extends Herbivore {};
+public abstract class Nectarivore extends Herbivore {
+    
+    protected Nectarivore(int row, int column) {
+        super(row,column);
+    }
+};

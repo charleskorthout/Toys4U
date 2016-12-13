@@ -1,3 +1,5 @@
+package Toys4U.Model;
+
 
 import Toys4U.Model.Digestions.Carnivore;
 import Toys4U.Infrastructure.Eatable;
@@ -6,6 +8,9 @@ import java.util.List;
 
 public class Dog extends Carnivore {
 
+    public Dog(int row, int column) {
+        super(row,column);
+    }    
     /**
      * A dog is eatable; at least in China they do
      * @return 
@@ -30,5 +35,9 @@ public class Dog extends Carnivore {
         super.movement = new Walk(4);
     }
 
-    
+    @Override
+    public void setEngergyLevel(double energy) {
+        this.energy = energy;
+    }
+
 }

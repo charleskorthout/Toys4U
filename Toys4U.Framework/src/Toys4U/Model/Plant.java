@@ -1,18 +1,18 @@
 package Toys4U.Model;
 
 
-import Toys4U.Infrastructure.Eatable;
 import Toys4U.Infrastructure.Digestion;
-import Toys4U.Model.Particle;
-import java.util.List;
+import Toys4U.Infrastructure.EnergeticParticle;
 
 
-public abstract class Plant extends Particle implements Digestion {
+public abstract class Plant extends Particle implements Digestion, EnergeticParticle {
 
+    protected double energy;
     /**
      * Default constructor to set particle color
      */
-    protected Plant() {
+    protected Plant(int row, int column) {
+        super(row,column);
         this.color = ParticleColor.Green;
     }
     /**
@@ -22,6 +22,6 @@ public abstract class Plant extends Particle implements Digestion {
     @Override
     public boolean isEatable() {
         return true; 
-    }
-    
+    }    
+        
 }

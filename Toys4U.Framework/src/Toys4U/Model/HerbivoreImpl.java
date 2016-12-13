@@ -18,11 +18,15 @@ import java.util.List;
  */
 public class HerbivoreImpl extends Herbivore {
 
+    protected HerbivoreImpl(int row, int column) {
+        super(row,column);
+    }
+    
     static int MAX_NUMBER_LEGS = 10;
     @Override
     public List<Eatable> digestion() {
         List<Eatable> plants = new ArrayList();
-        plants.add(new PlantImpl());
+        plants.add(new PlantImpl(0,0)); //TODO fix this horrible..
         return plants;
     }
 
@@ -32,6 +36,15 @@ public class HerbivoreImpl extends Herbivore {
     @Override
     public void setMovement() {
         this.movement = new Walk((int) Math.random()*MAX_NUMBER_LEGS + 1);
+    }
+
+    /**
+     * Sets the energy level for this implementation
+     * @param energy The level to set.
+     */
+    @Override
+    public void setEngergyLevel(double energy) {
+        this.energy = energy;
     }
 
 }

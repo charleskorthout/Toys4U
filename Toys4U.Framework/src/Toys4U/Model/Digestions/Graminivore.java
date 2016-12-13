@@ -10,4 +10,9 @@ package Toys4U.Model.Digestions;
  *
  * @author Charles Korthout
  */
-public abstract class Graminivore extends Herbivore {};
+public abstract class Graminivore extends Herbivore {
+    
+    protected Graminivore(int row, int column) {
+        super(row,column);
+    }
+};

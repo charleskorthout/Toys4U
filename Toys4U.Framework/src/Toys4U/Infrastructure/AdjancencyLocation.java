@@ -1,11 +1,14 @@
 package Toys4U.Infrastructure;
 
+import Toys4U.Model.Location;
+import java.util.List;
+
 public interface AdjancencyLocation {
 
 	/**
 	 * 
 	 * @param direction
 	 */
-	void getAdjancentLocation(int direction);
+	List<Location> getAdjancentLocations();
 
 }

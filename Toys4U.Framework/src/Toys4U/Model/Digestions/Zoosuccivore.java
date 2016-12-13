@@ -10,4 +10,9 @@ package Toys4U.Model.Digestions;
  *
  * @author Charles Korthout
  */
-public abstract class Zoosuccivore extends Carnivore {};
+public abstract class Zoosuccivore extends Carnivore {
+    
+    protected Zoosuccivore(int row, int column) {
+        super(row,column);
+    }
+};

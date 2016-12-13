@@ -1,4 +1,9 @@
-public class BreathingRule implements FeaturePredicate {
+package Toys4U.Rules;
+
+import Toys4U.Infrastructure.FeaturePredicate;
+
+
+public class MovementRule implements FeaturePredicate {
 
     @Override
     public void isSatisfied() {

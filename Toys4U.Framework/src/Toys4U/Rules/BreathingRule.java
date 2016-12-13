@@ -1,8 +1,11 @@
+package Toys4U.Rules;
 
-public class ProportionalGenerator implements GenerationRule {
+import Toys4U.Infrastructure.FeaturePredicate;
+
+public class BreathingRule implements FeaturePredicate {
 
     @Override
-    public void apply() {
+    public void isSatisfied() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

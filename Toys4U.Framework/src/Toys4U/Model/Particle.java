@@ -4,6 +4,11 @@ import Toys4U.Infrastructure.*;
 public abstract class Particle implements Eatable, State, Revertable, Persistable {
     
     protected ParticleColor color = ParticleColor.White;
+    protected Location location; 
+    
+    protected Particle(int row, int column) {
+        location = new Location(row,column);
+    }
     
     /**
      * Return the default particle color
@@ -13,6 +18,14 @@ public abstract class Particle implements Eatable, State, Revertable, Persistabl
         return this.color;
     }
 
+    /**
+     * Retrieves the location from the particle.
+     * @return the location
+     */
+    public Location getLocation() {
+        return location;
+    }
+    
     @Override
     public boolean isEatable(){
         return false;

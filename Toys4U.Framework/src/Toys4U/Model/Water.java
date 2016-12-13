@@ -5,7 +5,8 @@ public class Water extends Particle {
     /**
      * Default constructor
      */
-    public Water() {
+    public Water(int row, int column) {
+        super(row,column);
         this.color = ParticleColor.Blue;
     }
 }

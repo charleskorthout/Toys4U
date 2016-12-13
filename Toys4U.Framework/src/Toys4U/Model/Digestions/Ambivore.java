@@ -10,6 +10,9 @@ import java.util.List;
  */
 public abstract class Ambivore extends Herbivore {
 
+    protected Ambivore(int row, int column) {
+        super(row,column);
+    }
     /**
      * An Ambivore is a special kind of Herbivore and only eats grass or
      * broad leaf plants

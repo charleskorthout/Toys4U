@@ -10,4 +10,9 @@ package Toys4U.Model.Digestions;
  *
  * @author Charles Korthout
  */
-public abstract class Insectivore extends Carnivore {};
+public abstract class Insectivore extends Carnivore {
+    
+    protected Insectivore(int row, int column) {
+        super(row,column);
+    }
+};

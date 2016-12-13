@@ -6,7 +6,7 @@
 
 package Toys4U.Model;
 
-import Toys4U.Model.Digestions.Carnivore;
+import Toys4U.Model.Digestions.Omnivore;
 import Toys4U.Infrastructure.Walk;
 import Toys4U.Infrastructure.Eatable;
 import java.util.ArrayList;
@@ -16,8 +16,12 @@ import java.util.List;
  *
  * @author Charles Korthout
  */
-public class OmnivoreImpl extends Carnivore {
+public class OmnivoreImpl extends Omnivore {
 
+    protected OmnivoreImpl(int row, int column) {
+        super(row,column);
+    }
+    
     static int MAX_NUMBER_LEGS = 10;
     @Override
     public List<Eatable> digestion() {
@@ -34,4 +38,12 @@ public class OmnivoreImpl extends Carnivore {
         this.movement = new Walk((int) Math.random()*MAX_NUMBER_LEGS + 1);
     }
 
+    /**
+     * Sets the energy level for this Omnivore implementation
+     * @param energy The energy level
+     */
+    @Override
+    public void setEngergyLevel(double energy) {
+        this.energy = energy;
+    }
 }

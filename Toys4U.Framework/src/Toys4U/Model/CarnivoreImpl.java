@@ -18,12 +18,18 @@ import java.util.List;
  */
 public class CarnivoreImpl extends Carnivore {
 
+    
     static int MAX_NUMBER_LEGS = 10;
+    
+    protected CarnivoreImpl(int row, int column) {
+        super(row,column);
+    }
+    
     @Override
     public List<Eatable> digestion() {
         List<Eatable> preys = new ArrayList();
         preys.add(this);
-        preys.add(new HerbivoreImpl());
+        preys.add(new HerbivoreImpl(0,0));
         return preys;
     }
 
@@ -34,5 +40,11 @@ public class CarnivoreImpl extends Carnivore {
     public void setMovement() {
         this.movement = new Walk((int) Math.random()*MAX_NUMBER_LEGS + 1);
     }
+    
+    @Override
+    public void setEngergyLevel(double energy) {
+        this.energy = energy;
+    }
+
 
 }

@@ -10,4 +10,9 @@ package Toys4U.Model.Digestions;
  *
  * @author Charles Korthout
  */
-public abstract class Myrmevore extends Carnivore {};
+public abstract class Myrmevore extends Carnivore {
+    
+    protected Myrmevore(int row, int column) {
+        super(row,column);
+    }
+};

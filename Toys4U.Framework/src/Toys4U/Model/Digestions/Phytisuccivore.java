@@ -10,4 +10,9 @@ package Toys4U.Model.Digestions;
  *
  * @author Charles Korthout
  */
-public abstract class Phytisuccivore extends Herbivore {};
+public abstract class Phytisuccivore extends Herbivore {
+    
+    protected Phytisuccivore(int row, int column) {
+        super(row,column);
+    }
+};

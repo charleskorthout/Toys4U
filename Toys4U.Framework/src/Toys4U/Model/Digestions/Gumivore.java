@@ -10,4 +10,9 @@ package Toys4U.Model.Digestions;
  *
  * @author Charles Korthout
  */
-public abstract class Gumivore extends Herbivore {};
+public abstract class Gumivore extends Herbivore {
+    
+    protected Gumivore(int row, int column) {
+        super(row,column);
+    }
+};

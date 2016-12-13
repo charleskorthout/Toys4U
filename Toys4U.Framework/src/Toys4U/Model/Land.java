@@ -7,7 +7,8 @@ public class Land extends Particle {
     /**
      * Default Constructor
      */
-    public Land() {
+    public Land(int row, int column) {
+        super(row,column);
         this.color = ParticleColor.White;
     }
 }

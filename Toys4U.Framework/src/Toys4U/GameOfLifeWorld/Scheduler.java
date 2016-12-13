@@ -1,3 +1,5 @@
+package Toys4U.GameOfLifeWorld;
+
 public interface Scheduler {
 
 	/**

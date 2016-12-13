@@ -10,4 +10,10 @@ package Toys4U.Model.Digestions;
  *
  * @author Charles Korthout
  */
-public abstract class Sanguivore extends Carnivore {};
+public abstract class Sanguivore extends Carnivore {
+    
+    protected Sanguivore(int row, int column) {
+        super(row,column);
+    }
+
+};
