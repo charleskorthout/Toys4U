@@ -5,14 +5,17 @@ import Toys4U.Infrastructure.MovingParticle;
 
 public final class Fly implements MovingParticle{
 
-    
+    VelocityVector velocity;
     public Fly() {
         
     }
-    
     @Override
-    public void move(GranularDirection direction, Double velocity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void setVelocityVector(VelocityVector velocity) {
+        this.velocity = velocity;
     }
 
-}
+    @Override
+    public VelocityVector getVelocityVector() {
+        return velocity;
+    }
+ }

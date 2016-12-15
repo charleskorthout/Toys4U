@@ -1,17 +1,16 @@
 package Toys4U.GameOfLifeWorld;
 
+import Toys4U.Infrastructure.Address;
 import Toys4U.Infrastructure.Generator;
-import Toys4U.Model.Location;
-import Toys4U.Model.Particle;
-import java.util.ArrayList;
+import Toys4U.Particles.Collections.ParticleCollection;
+import Toys4U.Particles.Particle;
 import java.util.HashMap;
-import java.util.List;
 
 public class Habitat {
     
         private int rows;   
         private int columns;
-        private HashMap<Location, List<Particle>> particles;
+        private HashMap<Address, ParticleCollection> particles;
         
         /**
          * Constructs an empty habitat with specified number of rows and columns
@@ -35,17 +34,16 @@ public class Habitat {
 	 * 
 	 * @param particle
 	 */
-	public void put(Particle particle) {
-                Location location = particle.getLocation();
-                List<Particle> values = new ArrayList();
-                if (particles.containsKey(location)) {
-                    values = particles.get(location);
+	public void put(Address address, Particle particle) {
+                ParticleCollection values = new ParticleCollection();
+                if (particles.containsKey(address)) {
+                    values = particles.get(address);
                     values.add(particle);
-                    particles.replace(location, values);
+                    particles.replace(address, values);
                 }
                 else {
                     values.add(particle);
-                    particles.put(particle.getLocation(), values);
+                    particles.put(address, values);
                 }
 	}
 
@@ -53,13 +51,12 @@ public class Habitat {
 	 * Removes a specific particle from the habitat.
 	 * @param particle
 	 */
-	public void remove(Particle particle) {
-		Location location = particle.getLocation();
-                List<Particle> values = new ArrayList();
-                if (particles.containsKey(location)) {
-                    values = particles.get(location);
+	public void remove(Address address, Particle particle) {
+		ParticleCollection values = new ParticleCollection();
+                if (particles.containsKey(address)) {
+                    values = particles.get(address);
                     values.remove(particle);
-                    particles.replace(location, values);
+                    particles.replace(address, values);
                 }                
 	}
 

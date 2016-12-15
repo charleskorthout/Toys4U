@@ -9,7 +9,9 @@ package Toys4U.Infrastructure;
  *
  * @author Charles Korthout
  */
-public interface MovingParticle {
-    void setVelocityVector(VelocityVector velocity);
-    VelocityVector getVelocityVector();
+public interface Address {
+    int getWorld();
+    int getHabitat();
+    int getX();
+    int getY();
 }

@@ -6,9 +6,9 @@
 
 package Toys4U.GameOfLifeWorld;
 
-import Toys4U.Model.Particle;
+import Toys4U.Particles.Particle;
 import Toys4U.Infrastructure.Generator;
-import Toys4U.Model.Location;
+import Toys4U.Particles.Location;
 
 /**
  *

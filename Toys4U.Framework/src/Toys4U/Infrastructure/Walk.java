@@ -6,6 +6,7 @@ import Toys4U.Infrastructure.MovingParticle;
 public final class Walk implements MovingParticle{
 
     int legs;
+    VelocityVector velocity;
         
     public Walk(int legs) {
         this.legs = legs;
@@ -16,11 +17,17 @@ public final class Walk implements MovingParticle{
      */	      
     public int getLegs(){
         return legs;
+    }    
+
+    @Override
+    public void setVelocityVector(VelocityVector velocity) {
+        this.velocity = velocity;
+    }
+
+    @Override
+    public VelocityVector getVelocityVector() {
+        return velocity;
     }
     
-    @Override
-    public void move(GranularDirection direction, Double velocity) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
 }

@@ -6,7 +6,7 @@
 
 package Toys4U.View;
 
-import Toys4U.Model.ParticleColor;
+import Toys4U.Particles.ParticleColor;
 import javafx.scene.paint.Color;
 
 /**
