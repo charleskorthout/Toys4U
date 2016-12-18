@@ -5,6 +5,6 @@ import Toys4U.Particles.Particle;
 
 public interface Generator {
 
-	Particle generate(Location loc);
+	Particle generate();
 
 }

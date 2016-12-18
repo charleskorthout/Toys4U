@@ -13,8 +13,8 @@ import Toys4U.Infrastructure.Generator;
  * @author Charles Korthout
  */
 public class HabitatFactory { 
-    public static Habitat create(int rows, int columns, Generator generator) {
-        Habitat habitat = new Habitat(rows, columns);
+    public static Habitat create(int worldid, int habitatid,int rows, int columns, Generator generator) {
+        Habitat habitat = new Habitat(worldid, habitatid, rows, columns);
         /**
          * TODO
          * 

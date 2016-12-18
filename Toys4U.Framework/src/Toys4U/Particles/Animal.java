@@ -126,7 +126,7 @@ public abstract class Animal extends Particle implements Digestion, MovingPartic
      * Animals are only willing to pare and get children if the have sufficient energy
      * @return true if they have sufficient energy, false otherwise
      */
-    public boolean willBreath() {
+    public boolean willBreed() {
         return energy > (stamina * horniness);
     }
     

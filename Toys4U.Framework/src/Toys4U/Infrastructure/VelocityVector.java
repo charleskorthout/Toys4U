@@ -12,8 +12,9 @@ package Toys4U.Infrastructure;
  */
 public class VelocityVector {
     double velocity;
-    GranularDirection direction;
-    public VelocityVector(double velocity, GranularDirection direction) {
+    Direction direction;
+    
+    public VelocityVector(double velocity, Direction direction) {
         this.velocity = velocity;
         this.direction = direction;
     }
@@ -30,7 +31,7 @@ public class VelocityVector {
      * Retrieves the angular direction
      * @return the direction in degrees
      */
-    public GranularDirection getDirection() {
+    public Direction getDirection() {
         return direction;
     }
 }

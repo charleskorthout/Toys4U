@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Toys4U.Routing;
+package Toys4U.Network;
 
-import Toys4U.Infrastructure.Address;
 import Toys4U.Infrastructure.VelocityVector;
 import Toys4U.Particles.Particle;
 
@@ -23,10 +22,11 @@ public interface Router {
      * location point before it leaves the place is added to the routing result and the
      * procedure is passed to another router
      * @param particle The particle to transfer
-     * @param from The address of the location where it start the travel
+     * @param source The cell where it start the travel
+     * @param from The last visited address 
      * @param v The velocity and direction of the travel.
      * @return The result of the route
      */
-    RoutingResult route(Particle particle, Address from, VelocityVector v);
+    void route(Particle particle, Cell source, Cell from, VelocityVector v, RoutingResult result);
     
 }

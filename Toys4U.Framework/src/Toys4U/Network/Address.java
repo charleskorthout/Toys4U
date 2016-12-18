@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Toys4U.Infrastructure;
+package Toys4U.Network;
 
 /**
  *
  * @author Charles Korthout
  */
 public interface Address {
-    int getWorld();
-    int getHabitat();
+    int getWorldId();
+    int getHabitatId();
     int getX();
     int getY();
 }

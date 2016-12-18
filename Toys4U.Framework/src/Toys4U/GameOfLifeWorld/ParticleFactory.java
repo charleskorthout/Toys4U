@@ -15,11 +15,11 @@ import Toys4U.Particles.Location;
  * @author Charles Korthout
  */
 /**
- * Generate a particle based on the generation 
- * @author charl
+ * Generate a particle based on the generation algoritm
+ * @author Charles Korthout
  */
 public class ParticleFactory {
-    static Particle create(Location loc, Generator generator) {
-         return generator.generate(loc);        
+    static Particle create(Generator generator) {
+         return generator.generate();        
     }
 }

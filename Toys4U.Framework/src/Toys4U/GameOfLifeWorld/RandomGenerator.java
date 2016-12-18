@@ -9,7 +9,7 @@ import Toys4U.Particles.Particle;
 public class RandomGenerator implements Generator {
 
     @Override
-    public Particle generate(Location loc) {
+    public Particle generate() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
