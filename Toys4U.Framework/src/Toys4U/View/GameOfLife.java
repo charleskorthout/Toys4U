@@ -8,10 +8,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -56,11 +53,23 @@ public class GameOfLife extends Application {
         // Init root pane for putting widgets on it
         Pane root = new Pane();
 
+        // Init information pane
+        TitledPane titledPane = new TitledPane();
+        titledPane.setText("test pane");
+
         // Init tickname box
         TextField tickBox = new TextField();
         tickBox.setDisable(true);
         tickBox.setPrefWidth(50);
         tickBox.setText("1");
+
+        // Init map canvas
+        Canvas mapCanvas = new Canvas(506, 506);
+        GraphicsContext mapCanvasContent = mapCanvas.getGraphicsContext2D();
+
+        // Init information canvas
+        Canvas informationMap = new Canvas(200, 200);
+        GraphicsContext informationMapContent = informationMap.getGraphicsContext2D();
 
         playPauseButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
@@ -86,11 +95,9 @@ public class GameOfLife extends Application {
 
 
         // Position canvas for drawing map and fill it with test grid
-        Canvas canvas = new Canvas(506, 506);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        generateMap(gc);
-        canvas.setLayoutX(0);
-        canvas.setLayoutY(0);
+        generateMap(mapCanvasContent);
+        mapCanvas.setLayoutX(0);
+        mapCanvas.setLayoutY(0);
 
         // Position play/pause button for play/pause simulation
         playPauseButton.setLayoutX(5);
@@ -108,9 +115,15 @@ public class GameOfLife extends Application {
         tickBox.setLayoutX(450);
         tickBox.setLayoutY(515);
 
+        // Draw and position information map
+        drawInformationMap(informationMapContent);
+        informationMap.setLayoutX(520);
+        informationMap.setLayoutY(5);
+
         // Adding all widgets to window
         root.getChildren().add(playPauseButton);
-        root.getChildren().add(canvas);
+        root.getChildren().add(mapCanvas);
+        root.getChildren().add(informationMap);
         root.getChildren().add(speedSlider);
         root.getChildren().add(tickBoxLabel);
         root.getChildren().add(tickBox);
@@ -151,5 +164,39 @@ public class GameOfLife extends Application {
                 gc.fillRoundRect((objectColCount * 5) + 3, (objectRowCount * 5) + 3, 5, 5, 0, 0);
             }
         }
+    }
+
+    public void drawInformationMap(GraphicsContext gc) {
+        gc.setStroke(Color.BLACK);
+        gc.strokeText("Carnivore", 15, 15);
+        gc.strokeText("Omnivore", 15, 30);
+        gc.strokeText("Herbivore", 15, 45);
+        gc.strokeText("Plant", 15, 60);
+        gc.strokeText("Water", 15, 75);
+        gc.strokeText("Obstacle", 15, 90);
+        gc.strokeText("Land", 15, 105);
+
+        gc.setFill(Color.RED);
+        gc.fillRoundRect(1, 6, 10, 10, 0, 0);
+
+        gc.setFill(Color.YELLOW);
+        gc.fillRoundRect(1, 20, 10, 10, 0, 0);
+
+        gc.setFill(Color.BROWN);
+        gc.fillRoundRect(1, 35, 10, 10, 0, 0);
+
+        gc.setFill(Color.GREEN);
+        gc.fillRoundRect(1, 50, 10, 10, 0, 0);
+
+        gc.setFill(Color.BLUE);
+        gc.fillRoundRect(1, 64, 10, 10, 0, 0);
+
+        gc.setFill(Color.BLACK);
+        gc.fillRoundRect(1, 78, 10, 10, 0, 0);
+
+        gc.setFill(Color.WHITE);
+        gc.fillRoundRect(1, 94, 10, 10, 0, 0);
+
+
     }
 }
