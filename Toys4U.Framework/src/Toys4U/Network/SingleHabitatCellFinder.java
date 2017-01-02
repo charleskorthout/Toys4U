@@ -55,8 +55,9 @@ public class SingleHabitatCellFinder {
                 } 
                 x = x % habitat.getColumns(); // wrap around x if needed
                 y = y % habitat.getRows(); // wrap around y if needed
-                return habitat.get(new AddressImpl(worldid,habitatid, x , y));
-            }            
+                //return habitat.get(new AddressImpl(worldid,habitatid, x , y));
+                return null;
+            }
         
                 
         /**

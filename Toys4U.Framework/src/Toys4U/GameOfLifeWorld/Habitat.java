@@ -5,7 +5,13 @@ import Toys4U.Infrastructure.Generator;
 import Toys4U.Network.AddressImpl;
 import Toys4U.Network.Cell;
 import Toys4U.Network.NetworkComponent;
+import Toys4U.Particles.Collections.ParticleCollection;
+import Toys4U.Particles.Particle;
+import Toys4U.Particles.ParticleColor;
+
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Habitat implements NetworkComponent{
     
@@ -13,7 +19,7 @@ public class Habitat implements NetworkComponent{
         private int columns;
         private int worldid;
         private int habitatid; 
-        private HashMap<Address, Cell> cells;
+        private HashMap<AddressImpl, ParticleCollection> cells;
         
         /**
          * Constructs an empty habitat with specified number of rows and columns
@@ -25,7 +31,7 @@ public class Habitat implements NetworkComponent{
             this.columns = columns;
             this.habitatid = habitatid;
             this.worldid = worldid;
-            cells = new HashMap();
+            cells = new HashMap<>();
         }
 
         public Address getAddress(){
@@ -40,17 +46,17 @@ public class Habitat implements NetworkComponent{
         }
 	/**
 	 * 
-	 * @param particle
+	 * @param address
 	 */
-	public void put(Address address, Cell cell) {
-                cells.put(address, cell);
+	public void put(AddressImpl address, ParticleCollection particleCollection) {
+                cells.put(address, particleCollection);
 	}
 
 	/**
 	 * Removes a specific particle from the habitat.
-	 * @param particle
+	 * @param address
 	 */
-	public void remove(Address address) {
+	public void remove(AddressImpl address) {
 		cells.remove(address);   
 	}
 
@@ -59,9 +65,9 @@ public class Habitat implements NetworkComponent{
          * @param address
          * @return 
          */
-        public Cell get(Address address) {
-            if (cells.containsKey(address)){
-                return cells.get(address);
+        public ParticleCollection get(AddressImpl address) {
+            if (this.cells.containsKey(address)){
+                return this.cells.get(address);
             }
             else {
                 // TODO - implement cell creation
@@ -75,22 +81,15 @@ public class Habitat implements NetworkComponent{
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param rule
-	 */
-	public void generate(Generator generator) {
-		// TODO - implement Habitat.generate
-		throw new UnsupportedOperationException();
-	}
+    public ParticleColor[] getMap() {
+        ParticleColor[] map = new ParticleColor[this.rows * this.columns];
 
-	/**
-	 * 
-	 * @param scheduler
-	 */
-	public void schedule(int scheduler) {
-		// TODO - implement Habitat.schedule
-		throw new UnsupportedOperationException();
-	}
+        for (Map.Entry<AddressImpl, ParticleCollection> entry : this.cells.entrySet()) {
 
+            int location = ((entry.getKey().getX() * this.rows) + entry.getKey().getY());
+            map[location] = entry.getValue().getParticleColor();
+        }
+
+        return map;
+    }
 }

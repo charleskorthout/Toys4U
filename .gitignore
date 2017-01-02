@@ -1,0 +1,18 @@
+# Created by .ignore support plugin (hsz.mobi)
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+.gitignore
+.idea/Toys4U.iml
+.idea/compiler.xml
+.idea/copyright/
+.idea/deployment.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
+Toys4U.Framework/src/Toys4U/View/test.java
