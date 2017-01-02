@@ -7,6 +7,7 @@ import Toys4U.Network.Cell;
 import Toys4U.Network.NetworkComponent;
 import Toys4U.Particles.Collections.ParticleCollection;
 import Toys4U.Particles.Particle;
+import Toys4U.Particles.ParticleColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,27 +81,15 @@ public class Habitat implements NetworkComponent{
 		throw new UnsupportedOperationException();
 	}
 
-	/**
-	 * 
-	 * @param generator
-	 */
-	public void generate(ArrayList<Particle> worldMap) {
-        for (Map.Entry<AddressImpl, ParticleCollection> entry : cells.entrySet()) {
-            //String key = entry.getKey();
-            //entry.getValue() = new ParticleCollection();
+    public ParticleColor[] getMap() {
+        ParticleColor[] map = new ParticleColor[this.rows * this.columns];
 
-            //entry.getValue().add(generator.generate());
+        for (Map.Entry<AddressImpl, ParticleCollection> entry : this.cells.entrySet()) {
+
+            int location = ((entry.getKey().getX() * this.rows) + entry.getKey().getY());
+            map[location] = entry.getValue().getParticleColor();
         }
-        System.out.println("TESTING");
+
+        return map;
     }
-
-	/**
-	 * 
-	 * @param scheduler
-	 */
-	public void schedule(int scheduler) {
-		// TODO - implement Habitat.schedule
-		throw new UnsupportedOperationException();
-	}
-
 }

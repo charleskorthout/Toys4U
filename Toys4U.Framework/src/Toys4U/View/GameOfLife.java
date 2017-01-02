@@ -1,6 +1,8 @@
 package Toys4U.View;
 
 import Toys4U.GameOfLifeWorld.World;
+import Toys4U.Particles.Particle;
+import Toys4U.Particles.ParticleColor;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -28,15 +30,17 @@ public class GameOfLife extends Application {
     private long SPEED_IN_MIL = 1;
     // Play/pause boolean (true = play, false = pause)
     private boolean PLAY_MODE = false;
+    private World world;
 
     public static void main(String[] args) {
         launch(args);
     }
 
-    private World world;
-
     @Override
     public void start(Stage primaryStage) {
+        // initMap
+        setupDebug();
+
         // Init play/pause button
         Button playPauseButton = new Button();
         playPauseButton.setText("Pause");
@@ -137,7 +141,7 @@ public class GameOfLife extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        setupDebug();
+
     }
 
     /**
@@ -159,13 +163,20 @@ public class GameOfLife extends Application {
 
         // Tijdelijke raster demo voor weergaven wereld.
         // TODO omzetten naar 2D array
+        ParticleColor[] map = this.world.getHabitatMap(1);
+
         for (int objectRowCount = 0; objectRowCount < WORLD_ROW; objectRowCount++) {
             for (int objectColCount = 0; objectColCount < WORLD_COL; objectColCount++) {
-                if (objectColCount % 2 == 0) {
-                    gc.setFill((objectRowCount % 2 == 1) ? Color.RED : Color.WHITE);
+                int objectId = ((objectRowCount * WORLD_ROW) + objectColCount);
+
+                if (map[objectId] == ParticleColor.Blue) {
+                    gc.setFill(Color.BLUE);
+                } else if (map[objectId] == ParticleColor.White) {
+                    gc.setFill(Color.WHITE);
                 } else {
-                    gc.setFill((objectRowCount % 2 == 1) ? Color.WHITE : Color.RED);
+                    gc.setFill(Color.BLACK);
                 }
+
                 gc.fillRoundRect((objectColCount * 5) + 3, (objectRowCount * 5) + 3, 5, 5, 0, 0);
             }
         }
@@ -204,7 +215,7 @@ public class GameOfLife extends Application {
     }
 
     public void setupDebug(){
-        this.world = new World(1);
+        this.world = new World(0);
         this.world.add(WORLD_ROW, WORLD_COL);
     }
 }

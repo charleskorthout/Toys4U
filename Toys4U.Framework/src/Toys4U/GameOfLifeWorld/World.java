@@ -1,6 +1,7 @@
 package Toys4U.GameOfLifeWorld;
 
 import Toys4U.Infrastructure.AggregationHandler;
+import Toys4U.Particles.ParticleColor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,4 +32,9 @@ public class World {
         this.habitats.add(newHabitat);
     }
 
+    public ParticleColor[] getHabitatMap(int habitatId) {
+        System.out.println(this.habitats.size());
+        System.out.println(this.habitats.get(0).getMap().length);
+        return this.habitats.get(0).getMap();
+    }
 }

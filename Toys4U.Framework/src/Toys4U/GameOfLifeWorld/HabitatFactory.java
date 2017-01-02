@@ -9,6 +9,10 @@ package Toys4U.GameOfLifeWorld;
 import Toys4U.Infrastructure.Generator;
 import Toys4U.Network.AddressImpl;
 import Toys4U.Particles.Collections.ParticleCollection;
+import Toys4U.Particles.Particle;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *
@@ -20,18 +24,23 @@ public class HabitatFactory {
 
         System.out.println("DEBUG: filling habitat with objects..");
 
+        RandomGenerator mapGenerator = new RandomGenerator(landSurface, rows, columns);
+        ArrayList<Particle> particlesMap = mapGenerator.generate();
+        Iterator<Particle> particleIterator = particlesMap.iterator();
+
         int mapSize = rows*columns;
         for (int cnt = 0; cnt < mapSize; cnt++) {
 
             int x = cnt%rows;
             int y = cnt/rows;
             AddressImpl adress = new AddressImpl(worldid, habitatId, x, y);
-            habitat.put(adress, new ParticleCollection());
+
+            ParticleCollection particleCollection = new ParticleCollection();
+            particleCollection.add(particleIterator.next());
+            habitat.put(adress, particleCollection);
         }
         System.out.println("DEBUG: created new habitat with " + mapSize + " addresses.");
 
-        RandomGenerator randomGenerator = new RandomGenerator(landSurface, rows, columns);
-        habitat.generate(randomGenerator.generate());
 
         return habitat;
     }

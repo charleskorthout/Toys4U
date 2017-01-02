@@ -41,10 +41,6 @@ public class RandomGenerator {
         long seed = System.nanoTime();
         Collections.shuffle(randomMap, new Random(seed));
 
-
-
-
-
         return centerObjects2D(randomMap);
     }
 
@@ -56,13 +52,14 @@ public class RandomGenerator {
     private ArrayList<Particle> centerObjects2D(ArrayList<Particle> randomMap) {
         ArrayList<Particle> finalMap = new ArrayList<>();
 
+        // Toevoegen van middenpunt in map als niet beschikbaar
         int rowMap = this.rows;
         int colMap = this.columns;
 
-        if (rowMap % 2 == 0) {
+        if (rowMap % 2 != 0) {
             rowMap += 1;
         }
-        if (colMap % 2 == 0) {
+        if (colMap % 2 != 0) {
             colMap += 1;
         }
 
@@ -74,7 +71,18 @@ public class RandomGenerator {
             objectMap[a][b] = randomMap.get(cellCounter);
         }
 
+        // TODO eilandje bouwen
+
+
+        // Terug zetten van 2d map naar array
+        for (Particle[] row : objectMap
+                ) {
+            for (int column = 0; column < this.columns; column++) {
+                finalMap.add(row[column]);
+            }
+        }
 
         return finalMap;
     }
+
 }
