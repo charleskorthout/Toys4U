@@ -1,5 +1,6 @@
 package Toys4U.View;
 
+import Toys4U.GameOfLifeWorld.World;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -31,6 +32,8 @@ public class GameOfLife extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
+    private World world;
 
     @Override
     public void start(Stage primaryStage) {
@@ -133,6 +136,8 @@ public class GameOfLife extends Application {
         primaryStage.setTitle("Toys4U Life simulator");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        setupDebug();
     }
 
     /**
@@ -196,7 +201,10 @@ public class GameOfLife extends Application {
 
         gc.setFill(Color.WHITE);
         gc.fillRoundRect(1, 94, 10, 10, 0, 0);
+    }
 
-
+    public void setupDebug(){
+        this.world = new World(1);
+        this.world.add(WORLD_ROW, WORLD_COL);
     }
 }
