@@ -1,7 +1,6 @@
 package Toys4U.View;
 
 import Toys4U.GameOfLifeWorld.World;
-import Toys4U.Particles.Particle;
 import Toys4U.Particles.ParticleColor;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;

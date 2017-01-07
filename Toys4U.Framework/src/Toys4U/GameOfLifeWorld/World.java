@@ -15,7 +15,7 @@ public class World {
     WorldProperties properties;
     private List<Habitat> habitats;
 
-    private int landSurface = 40; //TODO static omzetten naar GUI
+    private int landSurface = 20; //TODO static omzetten naar GUI
 
     private int worldId;
 
