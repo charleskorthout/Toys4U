@@ -12,8 +12,9 @@ import Toys4U.Particles.ParticleColor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimerTask;
 
-public class Habitat implements NetworkComponent{
+public class Habitat implements NetworkComponent {
     
         private int rows;   
         private int columns;
@@ -91,5 +92,10 @@ public class Habitat implements NetworkComponent{
         }
 
         return map;
+    }
+
+
+    public void tester() {
+        System.out.println("ticktack.");
     }
 }

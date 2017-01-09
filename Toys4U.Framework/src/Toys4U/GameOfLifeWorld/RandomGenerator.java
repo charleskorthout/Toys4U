@@ -235,7 +235,6 @@ public class RandomGenerator {
     }
 
     private void moveToCenter(Particle[][] objectMap, int x, int y, int direction) {
-        objectMap
 
     }
 }

@@ -161,7 +161,7 @@ public class GameOfLife extends Application {
 
         // Tijdelijke raster demo voor weergaven wereld.
         // TODO omzetten naar 2D array
-        ParticleColor[] map = this.world.getHabitatMap(1);
+        ParticleColor[] map = this.world.getHabitatMap(0);
 
         for (int objectRowCount = 0; objectRowCount < WORLD_ROW; objectRowCount++) {
             for (int objectColCount = 0; objectColCount < WORLD_COL; objectColCount++) {
@@ -215,5 +215,6 @@ public class GameOfLife extends Application {
     public void setupDebug(){
         this.world = new World(0);
         this.world.add(WORLD_ROW, WORLD_COL);
+        this.world.startHabitat(0);
     }
 }
