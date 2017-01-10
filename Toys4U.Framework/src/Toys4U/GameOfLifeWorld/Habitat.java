@@ -1,36 +1,36 @@
 package Toys4U.GameOfLifeWorld;
 
 import Toys4U.Network.Address;
-import Toys4U.Infrastructure.Generator;
 import Toys4U.Network.AddressImpl;
-import Toys4U.Network.Cell;
-import Toys4U.Network.NetworkComponent;
+import Toys4U.Particles.Animal;
 import Toys4U.Particles.Collections.ParticleCollection;
-import Toys4U.Particles.Particle;
 import Toys4U.Particles.ParticleColor;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
-public class Habitat implements NetworkComponent{
-    
-        private int rows;   
+public class Habitat implements Observer {
+
+    private int rows;
         private int columns;
-        private int worldid;
-        private int habitatid; 
+    // World (parent) id
+    private int worldid;
+    // Id if this habitat
+    private int habitatid;
+    // All registered cells addresses pointing to the particles on it
         private HashMap<AddressImpl, ParticleCollection> cells;
-        
-        /**
-         * Constructs an empty habitat with specified number of rows and columns
+
+
+    /**
+     * Construct an empty habitat with specified number of rows and columns
+     * @param worldid
+     * @param habitatId
          * @param rows
          * @param columns 
          */
-        public Habitat(int worldid, int habitatid, int rows, int columns) {
+    public Habitat(int worldid, int habitatId, int rows, int columns) {
             this.rows = rows;
             this.columns = columns;
-            this.habitatid = habitatid;
+        this.habitatid = habitatId;
             this.worldid = worldid;
             cells = new HashMap<>();
         }
@@ -45,11 +45,14 @@ public class Habitat implements NetworkComponent{
         public int getColumns() {
             return columns;
         }
-	/**
-	 * 
-	 * @param address
-	 */
-	public void put(AddressImpl address, ParticleCollection particleCollection) {
+
+    /**
+     * create a new cell with a possibility to store particles
+     *
+     * @param address
+     * @param particleCollection
+     */
+    public void put(AddressImpl address, ParticleCollection particleCollection) {
                 cells.put(address, particleCollection);
 	}
 
@@ -64,7 +67,7 @@ public class Habitat implements NetworkComponent{
         /**
          * retrieves a cell based on it's address
          * @param address
-         * @return 
+         * @return ParticleCollection
          */
         public ParticleCollection get(AddressImpl address) {
             if (this.cells.containsKey(address)){
@@ -82,9 +85,20 @@ public class Habitat implements NetworkComponent{
 		throw new UnsupportedOperationException();
 	}
 
+    /**
+     * This function takes the cell hashmap and iterate trough it
+     * to create a array of partice colors. The array starts from
+     * x=0 y=0 and iterates from column to the next row. This map
+     * is used for drawing the current map of the habitat
+     * instance.
+     *
+     * @return map
+     */
     public ParticleColor[] getMap() {
+        // Create return map to fill
         ParticleColor[] map = new ParticleColor[this.rows * this.columns];
 
+        //Iterate trought hashmap and fill the array with the particle colors
         for (Map.Entry<AddressImpl, ParticleCollection> entry : this.cells.entrySet()) {
 
             int location = ((entry.getKey().getX() * this.rows) + entry.getKey().getY());
@@ -104,5 +118,10 @@ public class Habitat implements NetworkComponent{
             map.put(entry.getKey(), entry.getValue());
         }
         return map;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+
     }
 }

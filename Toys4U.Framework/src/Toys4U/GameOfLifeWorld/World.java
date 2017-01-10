@@ -27,8 +27,8 @@ public class World {
     public void add(int rows, int column) {
         // TODO - implement World.add
         //throw new UnsupportedOperationException();
-
-        Habitat newHabitat = HabitatFactory.create(this.worldId, this.habitats.size(), rows, column, landSurface);
+        RandomHabitatGenerator randomGenerator = new RandomHabitatGenerator(landSurface, rows, column);
+        Habitat newHabitat = HabitatFactory.create(this.worldId, this.habitats.size(), randomGenerator);
         this.habitats.add(newHabitat);
     }
 
