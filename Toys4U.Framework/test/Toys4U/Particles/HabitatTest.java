@@ -8,12 +8,17 @@ package Toys4U.Particles;
 import Toys4U.GameOfLifeWorld.Habitat;
 import Toys4U.GameOfLifeWorld.HabitatFactory;
 import Toys4U.GameOfLifeWorld.RandomGenerator;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
+import Toys4U.Network.AddressImpl;
+import Toys4U.Particles.Collections.ParticleCollection;
+import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
+
+import java.util.HashMap;
+
+import static com.sun.xml.internal.ws.dump.LoggingDumpTube.Position.After;
+import static com.sun.xml.internal.ws.dump.LoggingDumpTube.Position.Before;
+import static org.junit.Assert.assertEquals;
 
 /**
  *
@@ -39,7 +44,13 @@ public class HabitatTest {
     public void tearDown() throws Exception {
     }
 
-    public void ParticlecollectionTest() {
-        Habitat habitat = HabitatFactory.create(1,1, 400, 400, new RandomGenerator());
+    @Test
+    public void All_cells_must_have_at_least_one_particle() {
+        RandomGenerator generator = new RandomGenerator(90, 400,400);
+        Habitat habitat = HabitatFactory.create(1,1,  generator);
+        HashMap<AddressImpl, ParticleCollection> cells = habitat.getCells();
+        boolean expected = true;
+        boolean actual = cells.entrySet().stream().filter(x -> (x.getValue()).isEmpty() == true).count() == 0;
+        assertEquals(expected, actual);
     }
 }
