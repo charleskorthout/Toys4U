@@ -10,6 +10,7 @@ import Toys4U.Particles.Particle;
 import Toys4U.Particles.ParticleColor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -90,6 +91,18 @@ public class Habitat implements NetworkComponent{
             map[location] = entry.getValue().getParticleColor();
         }
 
+        return map;
+    }
+
+    /**
+     * Get the map with all cells
+     * @return the map with all cells
+     */
+    public HashMap<AddressImpl, ParticleCollection> getCells() {
+        HashMap<AddressImpl, ParticleCollection> map = new HashMap();
+        for (Map.Entry<AddressImpl, ParticleCollection> entry : this.cells.entrySet()) {
+            map.put(entry.getKey(), entry.getValue());
+        }
         return map;
     }
 }
