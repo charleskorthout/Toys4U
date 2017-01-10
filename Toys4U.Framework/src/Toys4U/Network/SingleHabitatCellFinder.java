@@ -67,6 +67,6 @@ public class SingleHabitatCellFinder {
          */
         public NetworkComponent whoHas(NetworkComponent component) {
             //TODO incorrect if worldid and habitat are equal than return habitat, otherwise move up...
-            return habitat;
+            return (NetworkComponent) habitat;
         }
 }

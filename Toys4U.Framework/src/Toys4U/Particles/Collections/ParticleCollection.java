@@ -6,11 +6,7 @@
 
 package Toys4U.Particles.Collections;
 
-import Toys4U.Particles.Animal;
-import Toys4U.Particles.Obstacle;
-import Toys4U.Particles.Particle;
-import Toys4U.Particles.ParticleColor;
-import Toys4U.Particles.Water;
+import Toys4U.Particles.*;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -33,6 +29,13 @@ public class ParticleCollection<P extends Particle> extends ArrayList<P> {
     }
 
     ;
+
+    /**
+     * Cehcks if the collection of particles contains land
+     * @return true if the collection has land false otherwise
+     */
+    public boolean containsLand()  { return this.stream().anyMatch(p -> p.getClass() == Land.class);
+    }
 
     /**
      * Checks if the collections contains an obstacle
