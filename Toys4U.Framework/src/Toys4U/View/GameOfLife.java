@@ -100,7 +100,6 @@ public class GameOfLife extends Application {
             }
         });
 
-
         // Position canvas for drawing map and fill it with test grid
         generateMap(mapCanvasContent);
         mapCanvas.setLayoutX(0);
