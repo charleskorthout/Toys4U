@@ -15,16 +15,21 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  *
  * @author charl
  */
-public class GameOfLife extends Application {
+public class GameOfLife extends Application implements Observer {
 
     // World size for testing
     private static int WORLD_ROW = 100;
     private static int WORLD_COL = 100;
-
+    // Test voor observer
+    private static Canvas mapCanvas = new Canvas(506, 506);
+    private static GraphicsContext mapCanvasContent = mapCanvas.getGraphicsContext2D();
     // Speed of simulation
     private long SPEED_IN_MIL = 1;
     // Play/pause boolean (true = play, false = pause)
@@ -70,8 +75,7 @@ public class GameOfLife extends Application {
         tickBox.setText("1");
 
         // Init map canvas
-        Canvas mapCanvas = new Canvas(506, 506);
-        GraphicsContext mapCanvasContent = mapCanvas.getGraphicsContext2D();
+
 
         // Init information canvas
         Canvas informationMap = new Canvas(200, 200);
@@ -100,7 +104,7 @@ public class GameOfLife extends Application {
         });
 
         // Position canvas for drawing map and fill it with test grid
-        generateMap(mapCanvasContent);
+        //generateMap(mapCanvasContent);
         mapCanvas.setLayoutX(0);
         mapCanvas.setLayoutY(0);
 
@@ -142,43 +146,40 @@ public class GameOfLife extends Application {
 
     }
 
-    /**
-     * @param gc
-     * Drawing line by line for building up canvas for showing simulation.
-     */
-    public void generateMap(GraphicsContext gc) {
+    public void generateMap(ParticleColor[] map) {
         // Border draw
-        gc.setLineWidth(3);
-        gc.setFill(Color.BLACK);
+        this.mapCanvasContent.setLineWidth(3);
+        this.mapCanvasContent.setFill(Color.BLACK);
         // border down
-        gc.strokeLine(1, 505, 505, 505);
+        this.mapCanvasContent.strokeLine(1, 505, 505, 505);
         // border up
-        gc.strokeLine(1, 1, 505, 1);
+        this.mapCanvasContent.strokeLine(1, 1, 505, 1);
         // border right
-        gc.strokeLine(505, 1, 505, 505);
+        this.mapCanvasContent.strokeLine(505, 1, 505, 505);
         // border right
-        gc.strokeLine(1, 1, 1, 505);
+        this.mapCanvasContent.strokeLine(1, 1, 1, 505);
 
         // Tijdelijke raster demo voor weergaven wereld.
         // TODO omzetten naar 2D array
-        ParticleColor[] map = this.world.getHabitatMap(0);
+        //ParticleColor[] map = this.world.getHabitatMap(0);
 
         for (int objectRowCount = 0; objectRowCount < WORLD_ROW; objectRowCount++) {
             for (int objectColCount = 0; objectColCount < WORLD_COL; objectColCount++) {
                 int objectId = ((objectRowCount * WORLD_ROW) + objectColCount);
 
                 if (map[objectId] == ParticleColor.Blue) {
-                    gc.setFill(Color.BLUE);
+                    this.mapCanvasContent.setFill(Color.BLUE);
                 } else if (map[objectId] == ParticleColor.White) {
-                    gc.setFill(Color.WHITE);
+                    this.mapCanvasContent.setFill(Color.WHITE);
                 } else {
-                    gc.setFill(Color.BLACK);
+                    this.mapCanvasContent.setFill(Color.BLACK);
                 }
 
-                gc.fillRoundRect((objectColCount * 5) + 3, (objectRowCount * 5) + 3, 5, 5, 0, 0);
+                this.mapCanvasContent.fillRoundRect((objectColCount * 5) + 3, (objectRowCount * 5) + 3, 5, 5, 0, 0);
             }
         }
     }
+
 
     public void drawInformationMap(GraphicsContext gc) {
         gc.setStroke(Color.BLACK);
@@ -214,7 +215,11 @@ public class GameOfLife extends Application {
 
     public void setupDebug(){
         this.world = new World(0);
-        this.world.add(WORLD_ROW, WORLD_COL);
+        this.world.add(WORLD_ROW, WORLD_COL, this);
         this.world.startHabitat(0);
+    }
+
+    public void update(Observable obj, Object arg) {
+        generateMap((ParticleColor[]) arg);
     }
 }

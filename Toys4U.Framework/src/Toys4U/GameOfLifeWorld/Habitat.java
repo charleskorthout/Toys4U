@@ -9,19 +9,16 @@ import Toys4U.Particles.Collections.ParticleCollection;
 import Toys4U.Particles.Particle;
 import Toys4U.Particles.ParticleColor;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.TimerTask;
+import java.util.*;
 
-public class Habitat implements NetworkComponent {
+public class Habitat extends Observable {
     
         private int rows;   
         private int columns;
         private int worldid;
         private int habitatid; 
         private HashMap<AddressImpl, ParticleCollection> cells;
-        
+
         /**
          * Constructs an empty habitat with specified number of rows and columns
          * @param rows
@@ -95,7 +92,10 @@ public class Habitat implements NetworkComponent {
     }
 
 
-    public void tester() {
+    public void cycle() {
         System.out.println("ticktack.");
+        setChanged();
+        notifyObservers(getMap());
+
     }
 }

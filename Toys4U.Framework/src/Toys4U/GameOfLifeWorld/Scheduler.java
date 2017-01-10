@@ -10,7 +10,7 @@ public class Scheduler extends TimerTask {
     }
 
     public void run() {
-        this.habitat.tester();
+        this.habitat.cycle();
     }
 
 }
