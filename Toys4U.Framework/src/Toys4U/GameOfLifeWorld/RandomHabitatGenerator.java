@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Random;
 
 
-public class RandomHabitatGenerator {
+public class RandomHabitatGenerator implements HabitatGenerator {
     private int landSurface;
     private int rows;
     private int columns;

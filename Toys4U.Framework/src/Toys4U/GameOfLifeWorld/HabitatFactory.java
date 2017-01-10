@@ -18,7 +18,7 @@ import java.util.Iterator;
  * @author Charles Korthout
  */
 public class HabitatFactory {
-    public static Habitat create(int worldid, int habitatId, RandomHabitatGenerator rGenerator) {
+    public static Habitat create(int worldid, int habitatId, HabitatGenerator rGenerator) {
 
         Habitat habitat = new Habitat(worldid, habitatId, rGenerator.getRows(), rGenerator.getColumns());
 
