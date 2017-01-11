@@ -167,7 +167,16 @@ public class GameOfLife extends Application {
         for (int objectRowCount = 0; objectRowCount < WORLD_ROW; objectRowCount++) {
             for (int objectColCount = 0; objectColCount < WORLD_COL; objectColCount++) {
                 int objectId = ((objectRowCount * WORLD_ROW) + objectColCount);
-
+                switch (map[objectId]) {
+                    case Blue : gc.setFill(Color.BLUE); break;
+                    case Black : gc.setFill(Color.BLACK); break;
+                    case Brown : gc.setFill(Color.BROWN); break;
+                    case Yellow : gc.setFill(Color.YELLOW); break;
+                    case Green : gc.setFill(Color.GREEN); break;
+                    case Red : gc.setFill(Color.RED); break;
+                    default: gc.setFill(Color.WHITE); break; // Land
+                }
+                /*
                 if (map[objectId] == ParticleColor.Blue) {
                     gc.setFill(Color.BLUE);
                 } else if (map[objectId] == ParticleColor.White) {
@@ -175,7 +184,7 @@ public class GameOfLife extends Application {
                 } else {
                     gc.setFill(Color.BLACK);
                 }
-
+                */
                 gc.fillRoundRect((objectColCount * 5) + 3, (objectRowCount * 5) + 3, 5, 5, 0, 0);
             }
         }

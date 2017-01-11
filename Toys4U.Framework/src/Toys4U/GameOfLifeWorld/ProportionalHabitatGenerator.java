@@ -1,11 +1,8 @@
 package Toys4U.GameOfLifeWorld;
 
 
-import Toys4U.Infrastructure.Generator;
 import Toys4U.Particles.Particle;
-import com.sun.xml.internal.bind.v2.util.QNameMap;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,44 +10,57 @@ import java.util.Random;
 
 
 public class ProportionalHabitatGenerator implements HabitatGenerator {
-    HashMap<Particle,Double> weights;
+    private final HashMap<Particle,Double> weights;
+    private final int rows;
+    private final int columns;
+    private final Random random;
 
-    public ProportionalHabitatGenerator(HashMap<Particle,Double> weights, int rows, int columns) {
+    public ProportionalHabitatGenerator(HashMap<Particle,Double> weights, int rows, int columns, Random random) {
         this.weights = weights;
+        this.columns = columns;
+        this.rows=rows;
+        this.random = random;
     }
 
     /**
      * Create a weighted or propotional partical selection
-     * @param weights the map with particle / weights
-     * @param random the random generator
      * @param <Particle> the particle
      * @return
      */
-    private <Particle> Particle getWeightedRandom(HashMap<Particle,Double> weights, Random random) {
+    private <Particle> Particle getWeightedRandomParticle() {
         return weights
                 .entrySet()
                 .stream()
-                .map(e -> new AbstractMap.SimpleEntry<Particle,Double>(e.getKey(),-Math.log(random.nextDouble()) / e.getValue()))
+                .map(e -> new AbstractMap.SimpleEntry<Particle,Double>((Particle)e.getKey(),-Math.log(random.nextDouble()) / e.getValue()))
                 .min((e0,e1)-> e0.getValue().compareTo(e1.getValue()))
                 .orElseThrow(IllegalArgumentException::new).getKey();
+
     }
 
-
+    /**
+     * Create a list of particles based on the weighted proportions
+     * @return the list of particles
+     */
     @Override
     public ArrayList<Particle> generate(){
-        throw new NotImplementedException();
+        ArrayList<Particle> randomMap = new ArrayList<>();
+        int cellsCount = this.rows*this.columns;
+        for (int counter = 0; counter < cellsCount; counter++) {
+            randomMap.add(getWeightedRandomParticle());
+        }
+        return randomMap;
     };
 
     public int getLandSurface(){
         throw new NotImplementedException();
     };
     public int getRows(){
-        throw new NotImplementedException();
+        return rows;
     };
     public int getColumns(){
-        throw new NotImplementedException();
+        return columns;
     };
     public int getTotalCells(){
-        throw new NotImplementedException();
+        return rows*columns;
     };
 }
