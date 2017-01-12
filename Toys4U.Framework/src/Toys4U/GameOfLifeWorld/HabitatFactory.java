@@ -18,29 +18,7 @@ import java.util.Iterator;
  * @author Charles Korthout
  */
 public class HabitatFactory {
-    public static Habitat create(int worldid, int habitatId, HabitatGenerator rGenerator) {
-
-        Habitat habitat = new Habitat(worldid, habitatId, rGenerator.getRows(), rGenerator.getColumns());
-
-        System.out.println("DEBUG: filling habitat with objects..");
-
-        ArrayList<Particle> particlesMap = rGenerator.generate();
-        Iterator<Particle> particleIterator = particlesMap.iterator();
-
-        int mapSize = rGenerator.getRows() * rGenerator.getColumns();
-        for (int cnt = 0; cnt < mapSize; cnt++) {
-
-            int x = cnt % rGenerator.getColumns();
-            int y = cnt / rGenerator.getRows();
-            AddressImpl adress = new AddressImpl(worldid, habitatId, x, y);
-
-            ParticleCollection particleCollection = new ParticleCollection();
-            particleCollection.add(particleIterator.next());
-            habitat.put(adress, particleCollection);
-        }
-
-        System.out.println("DEBUG: created new habitat with " + mapSize + " addresses.");
-        return habitat;
+    public static Habitat create(HabitatGenerator rGenerator) {
+        return rGenerator.generate();
     }
-
 }

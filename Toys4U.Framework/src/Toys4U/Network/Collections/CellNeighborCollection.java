@@ -14,4 +14,8 @@ import java.util.HashMap;
  *
  * @author Charles Korthout
  */
-public class CellNeighborCollection<D extends Direction, C extends Cell> extends HashMap<D,C> {}
+public class CellNeighborCollection<D extends Direction, C extends Cell> extends HashMap<D,C> {
+    public CellNeighborCollection() {
+        super();
+    }
+}

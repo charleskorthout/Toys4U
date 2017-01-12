@@ -14,27 +14,31 @@ public class World {
     int MAX_RUNS = 100;
     WorldProperties properties;
     private List<Habitat> habitats;
+    private final int rows;
+    private final int columns;
 
-    private int landSurface = 40; //TODO static omzetten naar GUI
+    //private int landSurface = 40; //TODO static omzetten naar GUI
+    private final HabitatGenerator generator;
 
     private int worldId;
 
-    public World(int worldId) {
+    public World(int worldId, int rows, int columns, HabitatGenerator generator) {
         this.worldId = worldId;
         this.habitats = new ArrayList<>();
+        this.rows=rows;
+        this.columns=columns;
+        this.generator = generator;
     }
 
-    public void add(int rows, int column) {
+    public void add() {
         // TODO - implement World.add
         //throw new UnsupportedOperationException();
-        RandomHabitatGenerator randomGenerator = new RandomHabitatGenerator(landSurface, rows, column);
-        Habitat newHabitat = HabitatFactory.create(this.worldId, this.habitats.size(), randomGenerator);
-        this.habitats.add(newHabitat);
+        habitats.add(generator.generate());
     }
 
     public ParticleColor[] getHabitatMap(int habitatId) {
         System.out.println(this.habitats.size());
-        System.out.println(this.habitats.get(0).getMap().length);
-        return this.habitats.get(0).getMap();
+        System.out.println(this.habitats.get(habitatId).getMap().length);
+        return this.habitats.get(habitatId).getMap();
     }
 }

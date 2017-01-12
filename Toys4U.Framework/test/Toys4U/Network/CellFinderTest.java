@@ -97,7 +97,27 @@ public class CellFinderTest {
            return new ParticleCollection();
        }
 
-       /**
+        @Override
+        public void setParticles(ParticleCollection particles) {
+
+        }
+
+        @Override
+        public CellStatus getStatus() {
+            return null;
+        }
+
+        @Override
+        public void Process(long cycle) {
+
+        }
+
+        @Override
+        public void Surpass(long cycle) {
+
+        }
+
+        /**
         * Get the address of this cell
         * @return the address of this cell
         */

@@ -1,6 +1,8 @@
 package Toys4U.GameOfLifeWorld;
 
+import Toys4U.Network.Address;
 import Toys4U.Network.AddressImpl;
+import Toys4U.Network.Cell;
 import Toys4U.Particles.Collections.ParticleCollection;
 import org.junit.After;
 import org.junit.Before;
@@ -25,9 +27,9 @@ public class HabitatCellsTest {
     }
 
 
-    private HashMap<AddressImpl, ParticleCollection> getAddressParticleCollectionHashMap() {
-        RandomHabitatGenerator generator = new RandomHabitatGenerator(90, 40,40);
-        Habitat habitat = HabitatFactory.create(1,1,  generator);
+    private HashMap<Address, Cell> getAddressParticleCollectionHashMap() {
+        RandomHabitatGenerator generator = new RandomHabitatGenerator(0, 40,40, 40);
+        Habitat habitat = HabitatFactory.create(generator);
         return habitat.getCells();
     }
 
@@ -37,9 +39,9 @@ public class HabitatCellsTest {
      */
     @Test
     public void All_cells_must_have_at_least_one_particle()  {
-        HashMap<AddressImpl, ParticleCollection> cells = getAddressParticleCollectionHashMap();
+        HashMap<Address, Cell> cells = getAddressParticleCollectionHashMap();
         boolean expected = true;
-        boolean actual = cells.entrySet().stream().filter(x -> (x.getValue()).isEmpty() == true).count() == 0;
+        boolean actual = cells.entrySet().stream().filter(x -> (x.getValue()).getParticles().isEmpty() == true).count() == 0;
         assertEquals(expected, actual);
     }
 
@@ -49,9 +51,9 @@ public class HabitatCellsTest {
      */
     @Test
     public void All_cells_must_have_at_least_one_water_particle_or_a_land_particle() {
-        HashMap<AddressImpl, ParticleCollection> cells = getAddressParticleCollectionHashMap();
+        HashMap<Address, Cell> cells = getAddressParticleCollectionHashMap();
         boolean expected = false;
-        boolean actual = cells.entrySet().stream().filter(x -> (!(x.getValue()).containsWater() && !(x.getValue()).containsLand())).count() > 0;
+        boolean actual = cells.entrySet().stream().filter(x -> (!(x.getValue()).getParticles().containsWater() && !(x.getValue()).getParticles().containsLand())).count() > 0;
         assertEquals(expected, actual);
     }
 
@@ -61,10 +63,10 @@ public class HabitatCellsTest {
     @Test
     public void Check_that_the_ratio_of_land_and_water_is_within_expected_limits() {
         double epsilon = 0.05; // 5% bandwith
-        HashMap<AddressImpl, ParticleCollection> cells = getAddressParticleCollectionHashMap();
+        HashMap<Address, Cell> cells = getAddressParticleCollectionHashMap();
         double expectedmin = 40.0*40.0*(90.0/100.0)*(1.0 - epsilon);
         double expectedmax = 40.0*40.0*(90.0/100.0)*(1.0 + epsilon);
-        long land = cells.entrySet().stream().filter(x -> ((x.getValue()).containsLand())).count() ;
+        long land = cells.entrySet().stream().filter(x -> ((x.getValue()).getParticles().containsLand())).count() ;
         System.out.print("land" + land);
         System.out.print("min : " + expectedmin);
         System.out.print("max: " + expectedmax);

@@ -19,7 +19,7 @@ import java.util.List;
  */
 public class HerbivoreImpl extends Herbivore {
 
-    protected HerbivoreImpl() {
+    public HerbivoreImpl() {
         super();
     }
     

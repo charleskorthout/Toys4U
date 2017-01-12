@@ -1,28 +1,61 @@
 package Toys4U.GameOfLifeWorld;
 
 
+import Toys4U.Network.AddressImpl;
+import Toys4U.Network.CellImpl;
 import Toys4U.Particles.*;
+import Toys4U.Particles.Collections.ParticleCollection;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Random;
 
 
 public class RandomHabitatGenerator implements HabitatGenerator {
     private int landSurface;
+    private final int worldid;
+    private final int habitatid;
     private int rows;
     private int columns;
     private int totalCells;
 
-    public RandomHabitatGenerator(int landSurface, int rows, int columns) {
+    public RandomHabitatGenerator( int worldid, int habitatid, int rows, int columns) {
+
         this.totalCells = (rows*columns);
         // Land/Water ratio naar hoeveelheid cells
-        this.landSurface = (totalCells/100)*landSurface;
+        // this.landSurface = (totalCells/100)*landSurface;
         // Dit zelfde voor de water
+        this.worldid = worldid;
+        this.habitatid = habitatid;
         this.rows = rows;
         this.columns = columns;
     }
 
+    private Habitat createRandom(int worldid, int habitatid, int rows, int columns)  {
+            HashMap < Particle, Double > weights = new HashMap();
+            double[] values = new double[6];
+            double sum = 0.0;
+            for(int i = 0; i< 6;i++)
+            {
+                values[i] = Math.random();
+                sum = sum + values[i];
+            }
+            weights.put(new PlantImpl(),values[0]/sum);
+            weights.put(new Water(),values[1]/sum);
+            weights.put(new OmnivoreImpl(),values[2]/sum);
+            weights.put(new CarnivoreImpl(),values[3]/sum);
+            weights.put(new HerbivoreImpl(),values[4]/sum);
+            weights.put(new Obstacle(),values[5]/sum);
+            ProportionalHabitatGenerator generator = new ProportionalHabitatGenerator(weights, worldid, habitatid, rows, columns, new Random());
+            return generator.generate();
+    }
+
+    public Habitat generate() {
+        return createRandom(worldid,habitatid,rows, columns);
+    }
+
+    /*
     public ArrayList<Particle> generate() {
         // Vullen van particels in arraylist
         // Hierbij word de ingestelde percentage gehanteerd van de land/water verhouding.
@@ -43,6 +76,7 @@ public class RandomHabitatGenerator implements HabitatGenerator {
 
         return centerObjects2D(randomMap);
     }
+    */
 
     /**
     * Functie voor het genereren van eilanden.
@@ -85,8 +119,15 @@ public class RandomHabitatGenerator implements HabitatGenerator {
         return finalMap;
     }
 
-    public int getLandSurface() {
-        return landSurface;
+
+    @Override
+    public int getWorldId() {
+        return worldid;
+    }
+
+    @Override
+    public int getHabitatId() {
+        return habitatid;
     }
 
     public int getRows() {

@@ -1,7 +1,7 @@
 package Toys4U.View;
 
+import Toys4U.GameOfLifeWorld.RandomHabitatGenerator;
 import Toys4U.GameOfLifeWorld.World;
-import Toys4U.Particles.Particle;
 import Toys4U.Particles.ParticleColor;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -16,9 +16,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
- * @author charl
+ * @author Charles Korthout
  */
 public class GameOfLife extends Application {
 
@@ -30,7 +33,8 @@ public class GameOfLife extends Application {
     private long SPEED_IN_MIL = 1;
     // Play/pause boolean (true = play, false = pause)
     private boolean PLAY_MODE = false;
-    private World world;
+    private List<World> worlds = new ArrayList();
+    private World lastworld;
 
     public static void main(String[] args) {
         launch(args);
@@ -162,7 +166,7 @@ public class GameOfLife extends Application {
 
         // Tijdelijke raster demo voor weergaven wereld.
         // TODO omzetten naar 2D array
-        ParticleColor[] map = this.world.getHabitatMap(1);
+        ParticleColor[] map = lastworld.getHabitatMap(0);
 
         for (int objectRowCount = 0; objectRowCount < WORLD_ROW; objectRowCount++) {
             for (int objectColCount = 0; objectColCount < WORLD_COL; objectColCount++) {
@@ -176,15 +180,6 @@ public class GameOfLife extends Application {
                     case Red : gc.setFill(Color.RED); break;
                     default: gc.setFill(Color.WHITE); break; // Land
                 }
-                /*
-                if (map[objectId] == ParticleColor.Blue) {
-                    gc.setFill(Color.BLUE);
-                } else if (map[objectId] == ParticleColor.White) {
-                    gc.setFill(Color.WHITE);
-                } else {
-                    gc.setFill(Color.BLACK);
-                }
-                */
                 gc.fillRoundRect((objectColCount * 5) + 3, (objectRowCount * 5) + 3, 5, 5, 0, 0);
             }
         }
@@ -223,7 +218,9 @@ public class GameOfLife extends Application {
     }
 
     public void setupDebug(){
-        this.world = new World(0);
-        this.world.add(WORLD_ROW, WORLD_COL);
+        RandomHabitatGenerator generator = new RandomHabitatGenerator(0,0, this.WORLD_ROW, this.WORLD_COL);
+        this.lastworld = new World(worlds.size(), this.WORLD_ROW, this.WORLD_COL,generator );
+        lastworld.add(); // add a habitat to this world
+        this.worlds.add(lastworld); // add this wolrd to the game
     }
 }

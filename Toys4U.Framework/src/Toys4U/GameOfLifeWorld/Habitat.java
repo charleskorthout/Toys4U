@@ -2,6 +2,8 @@ package Toys4U.GameOfLifeWorld;
 
 import Toys4U.Network.Address;
 import Toys4U.Network.AddressImpl;
+import Toys4U.Network.Cell;
+import Toys4U.Network.CellImpl;
 import Toys4U.Particles.Animal;
 import Toys4U.Particles.Collections.ParticleCollection;
 import Toys4U.Particles.ParticleColor;
@@ -17,7 +19,7 @@ public class Habitat implements Observer {
     // Id if this habitat
     private int habitatid;
     // All registered cells addresses pointing to the particles on it
-        private HashMap<AddressImpl, ParticleCollection> cells;
+    private HashMap<Address, Cell> cells;
 
 
     /**
@@ -33,6 +35,7 @@ public class Habitat implements Observer {
         this.habitatid = habitatId;
             this.worldid = worldid;
             cells = new HashMap<>();
+
         }
 
         public Address getAddress(){
@@ -50,10 +53,9 @@ public class Habitat implements Observer {
      * create a new cell with a possibility to store particles
      *
      * @param address
-     * @param particleCollection
      */
-    public void put(AddressImpl address, ParticleCollection particleCollection) {
-                cells.put(address, particleCollection);
+    public void put(Cell cell) {
+                cells.put(cell.getAddress(), cell);
 	}
 
 	/**
@@ -71,7 +73,7 @@ public class Habitat implements Observer {
          */
         public ParticleCollection get(AddressImpl address) {
             if (this.cells.containsKey(address)){
-                return this.cells.get(address);
+                return (this.cells.get(address)).getParticles();
             }
             else {
                 // TODO - implement cell creation
@@ -99,10 +101,10 @@ public class Habitat implements Observer {
         ParticleColor[] map = new ParticleColor[this.rows * this.columns];
 
         //Iterate trought hashmap and fill the array with the particle colors
-        for (Map.Entry<AddressImpl, ParticleCollection> entry : this.cells.entrySet()) {
+        for (Map.Entry<Address, Cell> entry : this.cells.entrySet()) {
 
             int location = ((entry.getKey().getX() * this.rows) + entry.getKey().getY());
-            map[location] = entry.getValue().getParticleColor();
+            map[location] = entry.getValue().getParticles().getParticleColor();
         }
 
         return map;
@@ -112,9 +114,9 @@ public class Habitat implements Observer {
      * Get the map with all cells
      * @return the map with all cells
      */
-    public HashMap<AddressImpl, ParticleCollection> getCells() {
-        HashMap<AddressImpl, ParticleCollection> map = new HashMap();
-        for (Map.Entry<AddressImpl, ParticleCollection> entry : this.cells.entrySet()) {
+    public HashMap<Address, Cell> getCells() {
+        HashMap<Address, Cell> map = new HashMap();
+        for (Map.Entry<Address, Cell> entry : this.cells.entrySet()) {
             map.put(entry.getKey(), entry.getValue());
         }
         return map;
