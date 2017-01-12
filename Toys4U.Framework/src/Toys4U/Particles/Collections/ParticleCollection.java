@@ -7,9 +7,14 @@
 package Toys4U.Particles.Collections;
 
 import Toys4U.Particles.*;
-
+import Toys4U.Particles.Digestion.Carnivore;
+import Toys4U.Particles.Digestion.Herbivore;
+import Toys4U.Particles.Digestion.Omnivore;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -17,7 +22,28 @@ import java.util.stream.Stream;
  */
 public class ParticleCollection<P extends Particle> extends ArrayList<P> {
 
+    /**
+     * Group by and count the items
+     * @return a map with particles and occurences
+     */
+    public Map<P, Long> countBy() {
+        return this
+                .stream()
+                .collect(Collectors
+                        .groupingBy(Function.identity(), Collectors.counting()));
+    }
 
+
+    /**
+     * Count the number of elements in the collection
+     * @return
+     */
+    public long countPlant() {return this.stream().filter(p -> p instanceof Plant).count(); }
+    public long countOmnivore() {return this.stream().filter(p -> p instanceof Omnivore).count(); }
+    public long countCarnivore() {return this.stream().filter(p -> p instanceof Carnivore).count(); }
+    public long countHerbivore() {return this.stream().filter(p -> p instanceof Herbivore).count(); }
+    public long countWater() {return this.stream().filter(p -> p instanceof Water).count(); }
+    public long countObstacle() {return this.stream().filter(p -> p instanceof Obstacle).count(); }
 
     /**
      * Checks if the collection of particles contains water
@@ -30,12 +56,6 @@ public class ParticleCollection<P extends Particle> extends ArrayList<P> {
 
     ;
 
-    /**
-     * Cehcks if the collection of particles contains land
-     * @return true if the collection has land false otherwise
-     */
-    public boolean containsLand()  { return this.stream().anyMatch(p -> p.getClass() == Land.class);
-    }
 
     /**
      * Checks if the collections contains an obstacle
