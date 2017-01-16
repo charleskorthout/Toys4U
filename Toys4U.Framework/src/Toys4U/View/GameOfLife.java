@@ -5,6 +5,7 @@ import Toys4U.GameOfLifeWorld.World;
 import Toys4U.Particles.Particle;
 import Toys4U.Particles.ParticleColor;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -109,7 +110,7 @@ public class GameOfLife extends Application implements Observer {
         });
 
         // Position canvas for drawing map and fill it with test grid
-        generateMap(mapCanvasContent);
+        //generateMap(mapCanvasContent);
         mapCanvas.setLayoutX(0);
         mapCanvas.setLayoutY(0);
 
@@ -152,17 +153,17 @@ public class GameOfLife extends Application implements Observer {
     }
 
     /**
-     * @param gc
-     * Drawing line by line for building up canvas for showing simulation.
+     * @param
+
      */
-    public void generateMap(GraphicsContext gc) {
+    public void generateMap() {
         // Border draw
         this.mapCanvasContent.setLineWidth(3);
         this.mapCanvasContent.setFill(Color.BLACK);
         // border down
         this.mapCanvasContent.strokeLine(1, 505, 505, 505);
         // border up
-        gc.strokeLine(1, 1, 505, 1);
+        this.mapCanvasContent.strokeLine(1, 1, 505, 1);
         // border right
         this.mapCanvasContent.strokeLine(505, 1, 505, 505);
         // border right
@@ -176,15 +177,29 @@ public class GameOfLife extends Application implements Observer {
             for (int objectColCount = 0; objectColCount < WORLD_COL; objectColCount++) {
                 int objectId = ((objectRowCount * WORLD_ROW) + objectColCount);
                 switch (map[objectId]) {
-                    case Blue : gc.setFill(Color.BLUE); break;
-                    case Black : gc.setFill(Color.BLACK); break;
-                    case Brown : gc.setFill(Color.BROWN); break;
-                    case Yellow : gc.setFill(Color.YELLOW); break;
-                    case Green : gc.setFill(Color.GREEN); break;
-                    case Red : gc.setFill(Color.RED); break;
-                    default: gc.setFill(Color.WHITE); break; // Land
+                    case Blue:
+                        this.mapCanvasContent.setFill(Color.BLUE);
+                        break;
+                    case Black:
+                        this.mapCanvasContent.setFill(Color.BLACK);
+                        break;
+                    case Brown:
+                        this.mapCanvasContent.setFill(Color.BROWN);
+                        break;
+                    case Yellow:
+                        this.mapCanvasContent.setFill(Color.YELLOW);
+                        break;
+                    case Green:
+                        this.mapCanvasContent.setFill(Color.GREEN);
+                        break;
+                    case Red:
+                        this.mapCanvasContent.setFill(Color.RED);
+                        break;
+                    default:
+                        this.mapCanvasContent.setFill(Color.WHITE);
+                        break; // Land
                 }
-                gc.fillRoundRect((objectColCount * 5) + 3, (objectRowCount * 5) + 3, 5, 5, 0, 0);
+                this.mapCanvasContent.fillRoundRect((objectColCount * 5) + 3, (objectRowCount * 5) + 3, 5, 5, 0, 0);
             }
         }
     }
@@ -224,12 +239,12 @@ public class GameOfLife extends Application implements Observer {
     public void setupDebug(){
         RandomHabitatGenerator generator = new RandomHabitatGenerator(0,0, this.WORLD_ROW, this.WORLD_COL);
         this.lastworld = new World(worlds.size(), this.WORLD_ROW, this.WORLD_COL,generator );
-        lastworld.add(); // add a habitat to this world
+        lastworld.add(this); // add a habitat to this world
         this.worlds.add(lastworld); // add this wolrd to the game
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        generateMap(this.mapCanvasContent);
+        new Thread(() -> Platform.runLater(() -> this.generateMap())).start();
     }
 }

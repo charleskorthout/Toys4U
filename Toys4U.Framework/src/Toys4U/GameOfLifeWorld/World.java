@@ -2,6 +2,7 @@ package Toys4U.GameOfLifeWorld;
 
 import Toys4U.Infrastructure.AggregationHandler;
 import Toys4U.Particles.ParticleColor;
+import Toys4U.View.GameOfLife;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,9 +33,11 @@ public class World {
         this.habitThreads = new HashMap();
     }
 
-    public void add() {
+    public void add(GameOfLife GUI) {
         habitats.put(this.habitats.size(), generator.generate());
         startHabitat(this.habitats.size() - 1);
+        habitats.get(this.habitats.size() - 1).addObserver(GUI);
+
     }
 
     public ParticleColor[] getHabitatMap(int habitatId) {
