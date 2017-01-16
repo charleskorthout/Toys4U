@@ -110,6 +110,10 @@ public class Habitat extends Observable {
         return map;
     }
 
+    public void getAllAnimals() {
+
+    }
+
     /**
      * Get the map with all cells
      * @return the map with all cells
@@ -124,6 +128,7 @@ public class Habitat extends Observable {
 
     public void cycle() {
         System.out.println("ticktack.");
+        getAllAnimals();
         setChanged();
         notifyObservers(getMap());
     }

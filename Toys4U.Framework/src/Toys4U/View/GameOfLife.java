@@ -53,7 +53,7 @@ public class GameOfLife extends Application implements Observer {
 
         // Init play/pause button
         Button playPauseButton = new Button();
-        playPauseButton.setText("Pause");
+        playPauseButton.setText("Play");
         playPauseButton.setPrefWidth(60);
 
         // Init speedSlider
@@ -75,12 +75,54 @@ public class GameOfLife extends Application implements Observer {
         titledPane.setText("test pane");
 
         // Init tickname box
+
         TextField tickBox = new TextField();
         tickBox.setDisable(true);
         tickBox.setPrefWidth(50);
         tickBox.setText("1");
 
-        // Init map canvas
+
+        // init sizeRow input
+        Label inputRowsLabel = new Label();
+        inputRowsLabel.setText("Grid:");
+        TextField inputRows = new TextField();
+        inputRows.setPrefWidth(45);
+        inputRows.setDisable(true);
+        inputRows.setText("100");
+
+        // Init sizeCol input
+        Label inputColmLabel = new Label();
+        inputColmLabel.setText("by:");
+        TextField inputColm = new TextField();
+        inputColm.setDisable(true);
+        inputColm.setPrefWidth(45);
+        inputColm.setText("100");
+
+        // Init mapGenerator values
+        Label omnivoreLabel = new Label();
+        Label herbivoreLabel = new Label();
+        Label carnivoreLabel = new Label();
+        Label elementsLabel = new Label();
+        Label obstaclesLabel = new Label();
+        Label plantsLabel = new Label();
+        omnivoreLabel.setText("Omnivore:");
+        herbivoreLabel.setText("Herbivore:");
+        carnivoreLabel.setText("Carnivore:");
+        elementsLabel.setText("Elements:");
+        obstaclesLabel.setText("Obstacles:");
+        plantsLabel.setText("Plants:");
+        TextField omnivoreInput = new TextField();
+        TextField herbivoreInput = new TextField();
+        TextField carnivoreInput = new TextField();
+        TextField elementInput = new TextField();
+        TextField obstacleInput = new TextField();
+        TextField plantInput = new TextField();
+        omnivoreInput.setPrefWidth(45);
+        herbivoreInput.setPrefWidth(45);
+        carnivoreInput.setPrefWidth(45);
+        elementInput.setPrefWidth(45);
+        obstacleInput.setPrefWidth(45);
+        plantInput.setPrefWidth(45);
 
 
         // Init information canvas
@@ -109,6 +151,7 @@ public class GameOfLife extends Application implements Observer {
             }
         });
 
+
         // Position canvas for drawing map and fill it with test grid
         //generateMap(mapCanvasContent);
         mapCanvas.setLayoutX(0);
@@ -130,6 +173,40 @@ public class GameOfLife extends Application implements Observer {
         tickBox.setLayoutX(450);
         tickBox.setLayoutY(515);
 
+        // Position setup
+        inputRowsLabel.setLayoutX(5);
+        inputRowsLabel.setLayoutY(550);
+        inputRows.setLayoutX(45);
+        inputRows.setLayoutY(545);
+        inputColmLabel.setLayoutX(95);
+        inputColmLabel.setLayoutY(550);
+        inputColm.setLayoutX(120);
+        inputColm.setLayoutY(545);
+
+        omnivoreLabel.setLayoutX(5);
+        omnivoreLabel.setLayoutY(580);
+        herbivoreLabel.setLayoutX(5);
+        herbivoreLabel.setLayoutY(610);
+        carnivoreLabel.setLayoutX(5);
+        carnivoreLabel.setLayoutY(640);
+
+        omnivoreInput.setLayoutX(80);
+        omnivoreInput.setLayoutY(575);
+        herbivoreInput.setLayoutX(80);
+        herbivoreInput.setLayoutY(605);
+        carnivoreInput.setLayoutX(80);
+        carnivoreInput.setLayoutY(635);
+
+        obstaclesLabel.setLayoutX(150);
+        obstaclesLabel.setLayoutY(580);
+        obstacleInput.setLayoutX(225);
+        obstacleInput.setLayoutY(575);
+
+        plantsLabel.setLayoutX(150);
+        plantsLabel.setLayoutY(610);
+        plantInput.setLayoutX(225);
+        plantInput.setLayoutY(605);
+
         // Draw and position information map
         drawInformationMap(informationMapContent);
         informationMap.setLayoutX(520);
@@ -142,6 +219,20 @@ public class GameOfLife extends Application implements Observer {
         root.getChildren().add(speedSlider);
         root.getChildren().add(tickBoxLabel);
         root.getChildren().add(tickBox);
+        root.getChildren().add(inputRowsLabel);
+        root.getChildren().add(inputRows);
+        root.getChildren().add(inputColmLabel);
+        root.getChildren().add(inputColm);
+        root.getChildren().add(omnivoreLabel);
+        root.getChildren().add(herbivoreLabel);
+        root.getChildren().add(carnivoreLabel);
+        root.getChildren().add(omnivoreInput);
+        root.getChildren().add(herbivoreInput);
+        root.getChildren().add(carnivoreInput);
+        root.getChildren().add(obstaclesLabel);
+        root.getChildren().add(plantsLabel);
+        root.getChildren().add(obstacleInput);
+        root.getChildren().add(plantInput);
 
         // Building scene from pane
         Scene scene = new Scene(root, 800, 800);
@@ -149,13 +240,8 @@ public class GameOfLife extends Application implements Observer {
         primaryStage.setScene(scene);
         primaryStage.show();
 
-
     }
 
-    /**
-     * @param
-
-     */
     public void generateMap() {
         // Border draw
         this.mapCanvasContent.setLineWidth(3);
