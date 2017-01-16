@@ -1,21 +1,16 @@
 package Toys4U.GameOfLifeWorld;
 
-public interface Scheduler {
+import java.util.TimerTask;
 
-	/**
-	 * 
-	 * @param frequency
-	 */
-	void run(int frequency);
+public class Scheduler extends TimerTask {
+	private Habitat habitat;
 
-	void increase();
+	public Scheduler(Habitat habitat) {
+		this.habitat = habitat;
+	}
 
-	void decrease();
-
-	/**
-	 * 
-	 * @param frequency
-	 */
-	void setFrequency(int frequency);
+	public void run() {
+		this.habitat.cycle();
+	}
 
 }

@@ -10,7 +10,7 @@ import Toys4U.Particles.ParticleColor;
 
 import java.util.*;
 
-public class Habitat implements Observer {
+public class Habitat extends Observable {
 
     private int rows;
         private int columns;
@@ -122,8 +122,9 @@ public class Habitat implements Observer {
         return map;
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
-
+    public void cycle() {
+        System.out.println("ticktack.");
+        setChanged();
+        notifyObservers(getMap());
     }
 }

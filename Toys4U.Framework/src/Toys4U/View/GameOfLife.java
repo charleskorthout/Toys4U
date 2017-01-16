@@ -18,17 +18,20 @@ import javafx.stage.Stage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
  * @author Charles Korthout
  */
-public class GameOfLife extends Application {
+public class GameOfLife extends Application implements Observer {
 
     // World size for testing
     private static int WORLD_ROW = 100;
     private static int WORLD_COL = 100;
-
+    private static Canvas mapCanvas = new Canvas(506, 506);
+    private static GraphicsContext mapCanvasContent = mapCanvas.getGraphicsContext2D();
     // Speed of simulation
     private long SPEED_IN_MIL = 1;
     // Play/pause boolean (true = play, false = pause)
@@ -75,8 +78,6 @@ public class GameOfLife extends Application {
         tickBox.setText("1");
 
         // Init map canvas
-        Canvas mapCanvas = new Canvas(506, 506);
-        GraphicsContext mapCanvasContent = mapCanvas.getGraphicsContext2D();
 
         // Init information canvas
         Canvas informationMap = new Canvas(200, 200);
@@ -222,5 +223,10 @@ public class GameOfLife extends Application {
         this.lastworld = new World(worlds.size(), this.WORLD_ROW, this.WORLD_COL,generator );
         lastworld.add(); // add a habitat to this world
         this.worlds.add(lastworld); // add this wolrd to the game
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        generateMap(this.mapCanvasContent);
     }
 }
