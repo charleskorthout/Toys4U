@@ -1,7 +1,7 @@
 package Toys4U.View;
 
-import Toys4U.GameOfLifeWorld.RandomHabitatGenerator;
 import Toys4U.GameOfLifeWorld.World;
+import Toys4U.Particles.Particle;
 import Toys4U.Particles.ParticleColor;
 import javafx.application.Application;
 import javafx.beans.value.ChangeListener;
@@ -16,20 +16,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
-
 /**
  *
- * @author Charles Korthout
+ * @author charl
  */
-public class GameOfLife extends Application implements Observer {
+public class GameOfLife extends Application {
 
     // World size for testing
     private static int WORLD_ROW = 100;
     private static int WORLD_COL = 100;
+    // Test voor observer
     private static Canvas mapCanvas = new Canvas(506, 506);
     private static GraphicsContext mapCanvasContent = mapCanvas.getGraphicsContext2D();
     // Speed of simulation
@@ -78,6 +74,7 @@ public class GameOfLife extends Application implements Observer {
         tickBox.setText("1");
 
         // Init map canvas
+
 
         // Init information canvas
         Canvas informationMap = new Canvas(200, 200);
@@ -154,16 +151,16 @@ public class GameOfLife extends Application implements Observer {
      */
     public void generateMap(GraphicsContext gc) {
         // Border draw
-        gc.setLineWidth(3);
-        gc.setFill(Color.BLACK);
+        this.mapCanvasContent.setLineWidth(3);
+        this.mapCanvasContent.setFill(Color.BLACK);
         // border down
-        gc.strokeLine(1, 505, 505, 505);
+        this.mapCanvasContent.strokeLine(1, 505, 505, 505);
         // border up
         gc.strokeLine(1, 1, 505, 1);
         // border right
-        gc.strokeLine(505, 1, 505, 505);
+        this.mapCanvasContent.strokeLine(505, 1, 505, 505);
         // border right
-        gc.strokeLine(1, 1, 1, 505);
+        this.mapCanvasContent.strokeLine(1, 1, 1, 505);
 
         // Tijdelijke raster demo voor weergaven wereld.
         // TODO omzetten naar 2D array
