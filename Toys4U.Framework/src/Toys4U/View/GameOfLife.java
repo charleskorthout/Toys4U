@@ -1,5 +1,6 @@
 package Toys4U.View;
 
+import Toys4U.GameOfLifeWorld.RandomHabitatGenerator;
 import Toys4U.GameOfLifeWorld.World;
 import Toys4U.Particles.Particle;
 import Toys4U.Particles.ParticleColor;
@@ -16,11 +17,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+
 /**
  *
  * @author charl
  */
-public class GameOfLife extends Application {
+public class GameOfLife extends Application implements Observer {
 
     // World size for testing
     private static int WORLD_ROW = 100;
