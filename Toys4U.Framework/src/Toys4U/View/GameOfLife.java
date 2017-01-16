@@ -3,8 +3,7 @@ package Toys4U.View;
 import Toys4U.GameOfLifeWorld.ProportionalHabitatGenerator;
 import Toys4U.GameOfLifeWorld.RandomHabitatGenerator;
 import Toys4U.GameOfLifeWorld.World;
-import Toys4U.Particles.Particle;
-import Toys4U.Particles.ParticleColor;
+import Toys4U.Particles.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -19,10 +18,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
+import java.util.*;
 
 /**
  *
@@ -106,24 +102,28 @@ public class GameOfLife extends Application implements Observer {
         Label elementsLabel = new Label();
         Label obstaclesLabel = new Label();
         Label plantsLabel = new Label();
+        Label waterLabel = new Label();
         omnivoreLabel.setText("Omnivore:");
         herbivoreLabel.setText("Herbivore:");
         carnivoreLabel.setText("Carnivore:");
         elementsLabel.setText("Elements:");
         obstaclesLabel.setText("Obstacles:");
         plantsLabel.setText("Plants:");
+        waterLabel.setText("Water:");
         TextField omnivoreInput = new TextField();
         TextField herbivoreInput = new TextField();
         TextField carnivoreInput = new TextField();
         TextField elementInput = new TextField();
         TextField obstacleInput = new TextField();
         TextField plantInput = new TextField();
+        TextField waterInput = new TextField();
         omnivoreInput.setPrefWidth(45);
         herbivoreInput.setPrefWidth(45);
         carnivoreInput.setPrefWidth(45);
         elementInput.setPrefWidth(45);
         obstacleInput.setPrefWidth(45);
         plantInput.setPrefWidth(45);
+        waterInput.setPrefWidth(45);
 
 
         // Init information canvas
@@ -144,14 +144,16 @@ public class GameOfLife extends Application implements Observer {
                             herbivoreInput.getText(),
                             carnivoreInput.getText(),
                             obstacleInput.getText(),
-                            plantInput.getText())) {
+                            plantInput.getText(),
+                            waterInput.getText())) {
                         if (lastworld == null) {
-                            startNewWorld();
+                            startNewWorld(inputRows.getText(), inputColm.getText(), herbivoreInput.getText(), carnivoreInput.getText(), omnivoreInput.getText(), obstacleInput.getText(), plantInput.getText(), waterInput.getText());
                             omnivoreInput.setDisable(true);
                             herbivoreInput.setDisable(true);
                             carnivoreInput.setDisable(true);
                             obstacleInput.setDisable(true);
                             plantInput.setDisable(true);
+                            waterInput.setDisable(true);
                         }
                         lastworld.startHabitat(0, (int) speedSlider.getValue());
 
@@ -232,6 +234,11 @@ public class GameOfLife extends Application implements Observer {
         plantInput.setLayoutX(225);
         plantInput.setLayoutY(605);
 
+        waterLabel.setLayoutX(150);
+        waterLabel.setLayoutY(640);
+        waterInput.setLayoutX(225);
+        waterInput.setLayoutY(635);
+
         // Draw and position information map
         drawInformationMap(informationMapContent);
         informationMap.setLayoutX(520);
@@ -258,6 +265,8 @@ public class GameOfLife extends Application implements Observer {
         root.getChildren().add(plantsLabel);
         root.getChildren().add(obstacleInput);
         root.getChildren().add(plantInput);
+        root.getChildren().add(waterLabel);
+        root.getChildren().add(waterInput);
 
         // Building scene from pane
         Scene scene = new Scene(root, 800, 800);
@@ -347,8 +356,24 @@ public class GameOfLife extends Application implements Observer {
         gc.fillRoundRect(1, 94, 10, 10, 0, 0);
     }
 
-    public void startNewWorld() {
-        RandomHabitatGenerator generator = new RandomHabitatGenerator(0,0, this.WORLD_ROW, this.WORLD_COL);
+    public void startNewWorld(String rows, String columns, String herbivore, String carnivore, String omnivore, String obstacles, String plants, String water) {
+        HashMap<Particle, Double> ratio = new HashMap<>();
+        ratio.put(new PlantImpl(), (double) (Integer.parseInt(plants) / 100));
+        ratio.put(new OmnivoreImpl(), (double) Integer.parseInt(omnivore) / 100);
+        ratio.put(new CarnivoreImpl(), (double) Integer.parseInt(carnivore) / 100);
+        ratio.put(new HerbivoreImpl(), (double) Integer.parseInt(herbivore) / 100);
+        ratio.put(new Obstacle(), (double) Integer.parseInt(obstacles) / 100);
+        ratio.put(new Water(), (double) Integer.parseInt(water) / 100);
+
+
+        double totalFilled = 0;
+        for (Map.Entry<Particle, Double> entry : ratio.entrySet()) {
+            totalFilled += entry.getValue();
+        }
+
+        ratio.put(new Land(), (double) 1 - totalFilled);
+
+        ProportionalHabitatGenerator generator = new ProportionalHabitatGenerator(ratio, 0, 0, Integer.parseInt(rows), Integer.parseInt(columns), new Random());
         //ProportionalHabitatGenerator generator = new ProportionalHabitatGenerator()
         this.lastworld = new World(worlds.size(), this.WORLD_ROW, this.WORLD_COL,generator );
         lastworld.add(this); // add a habitat to this world
@@ -360,7 +385,7 @@ public class GameOfLife extends Application implements Observer {
         new Thread(() -> Platform.runLater(() -> this.generateMap())).start();
     }
 
-    public boolean checkInputValidation(String omnivore, String herbivore, String carnivore, String obstacle, String plant) {
+    public boolean checkInputValidation(String omnivore, String herbivore, String carnivore, String obstacle, String plant, String water) {
         boolean noError = true;
         double totalPrc = 0;
         try {
@@ -369,6 +394,7 @@ public class GameOfLife extends Application implements Observer {
             totalPrc += Integer.parseInt(carnivore);
             totalPrc += Integer.parseInt(obstacle);
             totalPrc += Integer.parseInt(plant);
+            totalPrc += Integer.parseInt(water);
         } catch (NumberFormatException e) {
             noError = false;
         }

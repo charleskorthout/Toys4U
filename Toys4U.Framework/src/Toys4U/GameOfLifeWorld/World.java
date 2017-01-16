@@ -1,23 +1,15 @@
 package Toys4U.GameOfLifeWorld;
 
-import Toys4U.Infrastructure.AggregationHandler;
 import Toys4U.Particles.ParticleColor;
 import Toys4U.View.GameOfLife;
-
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Timer;
 
 
 public class World {
     private final int rows;
     private final int columns;
-    //private int landSurface = 40; //TODO static omzetten naar GUI
     private final HabitatGenerator generator;
-    long MAX_SIMULATIONS = Long.MAX_VALUE;
-    int MAX_RUNS = 100;
-    WorldProperties properties;
     private HashMap<Integer, Habitat> habitats;
     private HashMap<Integer, Timer> habitThreads;
     private int worldId;
