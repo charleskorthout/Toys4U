@@ -11,8 +11,6 @@ import java.util.Timer;
 
 
 public class World {
-
-    private static int defaultHabitatInterval = 1000;
     private final int rows;
     private final int columns;
     //private int landSurface = 40; //TODO static omzetten naar GUI

@@ -7,7 +7,6 @@ import Toys4U.Particles.Collections.ParticleCollection;
 import Toys4U.Particles.Particle;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -25,7 +24,7 @@ public class ProportionalHabitatGenerator implements HabitatGenerator {
         this.worldid = worldid;
         this.habitatid = habitatid;
         this.columns = columns;
-        this.rows=rows;
+        this.rows = rows;
         this.random = random;
     }
 
@@ -41,7 +40,6 @@ public class ProportionalHabitatGenerator implements HabitatGenerator {
                 .map(e -> new AbstractMap.SimpleEntry<Particle,Double>((Particle)e.getKey(),-Math.log(random.nextDouble()) / e.getValue()))
                 .min((e0,e1)-> e0.getValue().compareTo(e1.getValue()))
                 .orElseThrow(IllegalArgumentException::new).getKey();
-
     }
 
     /**

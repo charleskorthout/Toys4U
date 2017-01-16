@@ -1,5 +1,6 @@
 package Toys4U.View;
 
+import Toys4U.GameOfLifeWorld.ProportionalHabitatGenerator;
 import Toys4U.GameOfLifeWorld.RandomHabitatGenerator;
 import Toys4U.GameOfLifeWorld.World;
 import Toys4U.Particles.Particle;
@@ -348,9 +349,10 @@ public class GameOfLife extends Application implements Observer {
 
     public void startNewWorld() {
         RandomHabitatGenerator generator = new RandomHabitatGenerator(0,0, this.WORLD_ROW, this.WORLD_COL);
+        //ProportionalHabitatGenerator generator = new ProportionalHabitatGenerator()
         this.lastworld = new World(worlds.size(), this.WORLD_ROW, this.WORLD_COL,generator );
         lastworld.add(this); // add a habitat to this world
-        this.worlds.add(lastworld); // add this wolrd to the game
+        this.worlds.add(lastworld); // add world to the game
     }
 
     @Override

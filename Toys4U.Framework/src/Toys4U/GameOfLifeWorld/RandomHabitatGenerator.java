@@ -13,7 +13,6 @@ import java.util.Random;
 
 
 public class RandomHabitatGenerator implements HabitatGenerator {
-    private int landSurface;
     private final int worldid;
     private final int habitatid;
     private int rows;
@@ -32,12 +31,6 @@ public class RandomHabitatGenerator implements HabitatGenerator {
         this.columns = columns;
     }
 
-    private Habitat createRandom(int worldid, int habitatid, int rows, int columns)  {
-        HashMap<Particle, Double> weights = getRandomProportions();
-            ProportionalHabitatGenerator generator = new ProportionalHabitatGenerator(weights, worldid, habitatid, rows, columns, new Random());
-            return generator.generate();
-    }
-
     public static HashMap<Particle, Double> getRandomProportions() {
         HashMap < Particle, Double > weights = new HashMap();
         double[] values = new double[6];
@@ -54,6 +47,12 @@ public class RandomHabitatGenerator implements HabitatGenerator {
         weights.put(new HerbivoreImpl(),values[4]/sum);
         weights.put(new Obstacle(),values[5]/sum);
         return weights;
+    }
+
+    private Habitat createRandom(int worldid, int habitatid, int rows, int columns) {
+        HashMap<Particle, Double> weights = getRandomProportions();
+        ProportionalHabitatGenerator generator = new ProportionalHabitatGenerator(weights, worldid, habitatid, rows, columns, new Random());
+        return generator.generate();
     }
 
     public Habitat generate() {
@@ -109,9 +108,6 @@ public class RandomHabitatGenerator implements HabitatGenerator {
             int b = cellCounter-(a*this.rows);
             objectMap[a][b] = randomMap.get(cellCounter);
         }
-
-        // TODO eilandje bouwen
-
 
         // Terug zetten van 2d map naar array
         for (Particle[] row : objectMap
