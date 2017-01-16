@@ -35,7 +35,6 @@ public class World {
 
     public void add(GameOfLife GUI) {
         habitats.put(this.habitats.size(), generator.generate());
-        startHabitat(this.habitats.size() - 1);
         habitats.get(this.habitats.size() - 1).addObserver(GUI);
 
     }
@@ -44,18 +43,22 @@ public class World {
         return this.habitats.get(habitatId).getMap();
     }
 
-    public void startHabitat(int habitatId) {
+    public void startHabitat(int habitatId, int millis) {
         if (this.habitats.containsKey(habitatId)) {
             this.habitThreads.put(habitatId, new Timer());
-            this.habitThreads.get(habitatId).schedule(new Scheduler(this.habitats.get(habitatId)), 0, defaultHabitatInterval);
+            this.habitThreads.get(habitatId).schedule(new Scheduler(this.habitats.get(habitatId)), 0, millis);
         }
     }
 
-    public void setThreadInterval(int millis) {
-
+    public void setThreadInterval(int habitatId, int millis) {
+        pauseHabitat(habitatId);
+        startHabitat(habitatId, millis);
     }
 
     public void pauseHabitat(int habitatId) {
-
+        if (this.habitats.containsKey(habitatId)) {
+            this.habitThreads.get(habitatId).cancel();
+            this.habitThreads.remove(habitatId);
+        }
     }
 }

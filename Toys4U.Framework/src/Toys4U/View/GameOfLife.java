@@ -49,7 +49,6 @@ public class GameOfLife extends Application implements Observer {
     @Override
     public void start(Stage primaryStage) {
         // initMap
-        setupDebug();
 
         // Init play/pause button
         Button playPauseButton = new Button();
@@ -59,7 +58,8 @@ public class GameOfLife extends Application implements Observer {
         // Init speedSlider
         Slider speedSlider = new Slider();
         speedSlider.setMin(1);
-        speedSlider.setMax(1000);
+        speedSlider.setMax(10000);
+        speedSlider.setValue(1000);
         speedSlider.setValue(SPEED_IN_MIL);
         speedSlider.setPrefWidth(330);
 
@@ -134,10 +134,32 @@ public class GameOfLife extends Application implements Observer {
                 // Toggle for play/pause simulation
                 if (PLAY_MODE) {
                     PLAY_MODE = false;
-                    playPauseButton.setText("Pause");
-                } else {
-                    PLAY_MODE = true;
                     playPauseButton.setText("Play");
+                    lastworld.pauseHabitat(0);
+
+
+                } else {
+                    if (checkInputValidation(omnivoreInput.getText(),
+                            herbivoreInput.getText(),
+                            carnivoreInput.getText(),
+                            obstacleInput.getText(),
+                            plantInput.getText())) {
+                        if (lastworld == null) {
+                            startNewWorld();
+                            omnivoreInput.setDisable(true);
+                            herbivoreInput.setDisable(true);
+                            carnivoreInput.setDisable(true);
+                            obstacleInput.setDisable(true);
+                            plantInput.setDisable(true);
+                        }
+                        lastworld.startHabitat(0, (int) speedSlider.getValue());
+
+                        PLAY_MODE = true;
+                        playPauseButton.setText("Pause");
+
+                    } else {
+                        System.out.println("[!] ERROR input not correct.");
+                    }
                 }
             }
         });
@@ -146,8 +168,10 @@ public class GameOfLife extends Application implements Observer {
             public void changed(ObservableValue<? extends Number> ov,
                                 Number old_val, Number new_val) {
                 // Setting speed from speedslider
-                SPEED_IN_MIL = new_val.intValue();
-                tickBox.setText(Long.toString(SPEED_IN_MIL));
+                tickBox.setText(Long.toString(new_val.intValue()));
+                if (PLAY_MODE == true)
+                    lastworld.setThreadInterval(0, (int) speedSlider.getValue());
+
             }
         });
 
@@ -322,7 +346,7 @@ public class GameOfLife extends Application implements Observer {
         gc.fillRoundRect(1, 94, 10, 10, 0, 0);
     }
 
-    public void setupDebug(){
+    public void startNewWorld() {
         RandomHabitatGenerator generator = new RandomHabitatGenerator(0,0, this.WORLD_ROW, this.WORLD_COL);
         this.lastworld = new World(worlds.size(), this.WORLD_ROW, this.WORLD_COL,generator );
         lastworld.add(this); // add a habitat to this world
@@ -332,5 +356,25 @@ public class GameOfLife extends Application implements Observer {
     @Override
     public void update(Observable o, Object arg) {
         new Thread(() -> Platform.runLater(() -> this.generateMap())).start();
+    }
+
+    public boolean checkInputValidation(String omnivore, String herbivore, String carnivore, String obstacle, String plant) {
+        boolean noError = true;
+        double totalPrc = 0;
+        try {
+            totalPrc += Integer.parseInt(omnivore);
+            totalPrc += Integer.parseInt(herbivore);
+            totalPrc += Integer.parseInt(carnivore);
+            totalPrc += Integer.parseInt(obstacle);
+            totalPrc += Integer.parseInt(plant);
+        } catch (NumberFormatException e) {
+            noError = false;
+        }
+
+        if (totalPrc > 100) {
+            noError = false;
+        }
+
+        return noError;
     }
 }
