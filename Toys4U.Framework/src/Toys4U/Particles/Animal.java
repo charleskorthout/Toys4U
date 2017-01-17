@@ -4,15 +4,17 @@ import Toys4U.Infrastructure.Digestion;
 import Toys4U.Infrastructure.EnergeticParticle;
 import Toys4U.Infrastructure.MovingParticle;
 import Toys4U.Infrastructure.VelocityVector;
+import Toys4U.Network.AddressImpl;
 
 public abstract class Animal extends Particle implements Digestion, MovingParticle, EnergeticParticle {
 
     
     protected MovingParticle movement;
-    private double weight;
-    private double stamina;
     protected double energy;
     protected double strength; //TODO How to initiate!!!
+    AddressImpl address;
+    private double weight;
+    private double stamina;
     private VelocityVector velocity;
     private double swimlevel = Toys4U.Particles.Services.Constants.SWIM_LEVEL;
     private double movelevel = Toys4U.Particles.Services.Constants.MOVE_LEVEL;
@@ -129,5 +131,12 @@ public abstract class Animal extends Particle implements Digestion, MovingPartic
     public boolean willBreed() {
         return energy > (stamina * horniness);
     }
-    
+
+    public AddressImpl getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressImpl address) {
+        this.address = address;
+    }
 }

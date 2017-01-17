@@ -3,8 +3,8 @@ package Toys4U.GameOfLifeWorld;
 
 import Toys4U.Network.AddressImpl;
 import Toys4U.Network.CellImpl;
+import Toys4U.Particles.*;
 import Toys4U.Particles.Collections.ParticleCollection;
-import Toys4U.Particles.Particle;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 import java.util.AbstractMap;
 import java.util.HashMap;
@@ -30,16 +30,33 @@ public class ProportionalHabitatGenerator implements HabitatGenerator {
 
     /**
      * Create a weighted or propotional partical selection
-     * @param <Particle> the particle
+     * TODO: omzetten naar factory
      * @return
      */
-    private <Particle> Particle getWeightedRandomParticle() {
-        return weights
+    private Particle getWeightedRandomParticle() {
+        Particle newParticle = weights
                 .entrySet()
                 .stream()
                 .map(e -> new AbstractMap.SimpleEntry<Particle,Double>((Particle)e.getKey(),-Math.log(random.nextDouble()) / e.getValue()))
                 .min((e0,e1)-> e0.getValue().compareTo(e1.getValue()))
                 .orElseThrow(IllegalArgumentException::new).getKey();
+
+        if (newParticle instanceof CarnivoreImpl) {
+            return new CarnivoreImpl();
+        } else if (newParticle instanceof HerbivoreImpl) {
+            return new CarnivoreImpl();
+        } else if (newParticle instanceof OmnivoreImpl) {
+            return new CarnivoreImpl();
+        } else if (newParticle instanceof Water) {
+            return new Water();
+        } else if (newParticle instanceof Plant) {
+            return new PlantImpl();
+        } else if (newParticle instanceof Obstacle) {
+            return new Obstacle();
+        } else {
+            return new Land();
+        }
+
     }
 
     /**

@@ -5,8 +5,10 @@ import Toys4U.Network.AddressImpl;
 import Toys4U.Network.Cell;
 import Toys4U.Network.CellImpl;
 import Toys4U.Particles.Animal;
+import Toys4U.Particles.CarnivoreImpl;
 import Toys4U.Particles.Collections.ParticleCollection;
 import Toys4U.Particles.ParticleColor;
+import com.sun.security.ntlm.Client;
 
 import java.util.*;
 
@@ -52,7 +54,7 @@ public class Habitat extends Observable {
     /**
      * create a new cell with a possibility to store particles
      *
-     * @param address
+     * @param
      */
     public void put(Cell cell) {
                 cells.put(cell.getAddress(), cell);
@@ -106,12 +108,18 @@ public class Habitat extends Observable {
             int location = ((entry.getKey().getX() * this.rows) + entry.getKey().getY());
             map[location] = entry.getValue().getParticles().getParticleColor();
         }
-
         return map;
     }
 
-    public void getAllAnimals() {
+    public List<Animal> getAllAnimals() {
+        List<Animal> animals = new ArrayList<>();
+        for (Map.Entry<Address, Cell> entry : this.cells.entrySet()) {
+            entry.getValue().getParticles().stream().filter(c -> c instanceof Animal).forEach(value -> {
+                animals.add((Animal) value);
+            });
 
+        }
+        return animals;
     }
 
     /**
@@ -128,7 +136,7 @@ public class Habitat extends Observable {
 
     public void cycle() {
         System.out.println("ticktack.");
-        getAllAnimals();
+        List<Animal> animals = getAllAnimals();
         setChanged();
         notifyObservers(getMap());
     }
