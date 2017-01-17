@@ -127,39 +127,41 @@ public class Habitat extends Observable {
         Random random = new Random();
         for (Map.Entry<Address, Cell> entry : this.cells.entrySet()) {
             if (entry.getValue().getParticles().size() > 1) {
-                Object a = entry.getValue().getParticles().get(1);
+                for (int cn = 1; cn < entry.getValue().getParticles().size(); cn++) {
+                    Object a = entry.getValue().getParticles().get(cn);
 
-                if (a instanceof Animal) {
-                    AddressImpl animalLocation = ((Animal) a).getAddress();
-                    int ran = random.nextInt(7) + 1;
-                    int x = animalLocation.getX();
-                    int y = animalLocation.getY();
-                    if (ran == 1) {
-                        x++;
-                    } else if (ran == 2) {
-                        x--;
-                    } else if (ran == 3) {
-                        y++;
-                    } else if (ran == 4) {
-                        y--;
-                    } else if (ran == 5) {
-                        x++;
-                        y++;
-                    } else if (ran == 6) {
-                        x--;
-                        y--;
-                    } else if (ran == 7) {
-                        x++;
-                        y--;
-                    } else if (ran == 8) {
-                        x--;
-                        y++;
-                    }
+                    if (a instanceof Animal) {
+                        AddressImpl animalLocation = ((Animal) a).getAddress();
+                        int ran = random.nextInt(7) + 1;
+                        int x = animalLocation.getX();
+                        int y = animalLocation.getY();
+                        if (ran == 1) {
+                            x++;
+                        } else if (ran == 2) {
+                            x--;
+                        } else if (ran == 3) {
+                            y++;
+                        } else if (ran == 4) {
+                            y--;
+                        } else if (ran == 5) {
+                            x++;
+                            y++;
+                        } else if (ran == 6) {
+                            x--;
+                            y--;
+                        } else if (ran == 7) {
+                            x++;
+                            y--;
+                        } else if (ran == 8) {
+                            x--;
+                            y++;
+                        }
 
-                    AddressImpl newAddress = (AddressImpl) searchAdress(x, y);
-                    if (newAddress != null) {
-                        entry.getValue().getParticles().remove(a);
-                        this.cells.get(newAddress).getParticles().add(a);
+                        AddressImpl newAddress = (AddressImpl) searchAdress(x, y);
+                        if (newAddress != null) {
+                            entry.getValue().getParticles().remove(a);
+                            this.cells.get(newAddress).getParticles().add(a);
+                        }
                     }
                 }
             }
