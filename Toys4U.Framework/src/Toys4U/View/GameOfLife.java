@@ -357,21 +357,21 @@ public class GameOfLife extends Application implements Observer {
     }
 
     public void startNewWorld(String rows, String columns, String herbivore, String carnivore, String omnivore, String obstacles, String plants, String water) {
-        HashMap<Particle, Double> ratio = new HashMap<>();
-        ratio.put(new PlantImpl(), (double) (Integer.parseInt(plants) / 100));
-        ratio.put(new OmnivoreImpl(), (double) Integer.parseInt(omnivore) / 100);
-        ratio.put(new CarnivoreImpl(), (double) Integer.parseInt(carnivore) / 100);
-        ratio.put(new HerbivoreImpl(), (double) Integer.parseInt(herbivore) / 100);
-        ratio.put(new Obstacle(), (double) Integer.parseInt(obstacles) / 100);
-        ratio.put(new Water(), (double) Integer.parseInt(water) / 100);
+        HashMap<String, Double> ratio = new HashMap<>();
+        ratio.put(new String("Plant"), (double) (Integer.parseInt(plants) / 100));
+        ratio.put(new String("OmnivoreImpl"), (double) Integer.parseInt(omnivore) / 100);
+        ratio.put(new String("CarnivoreImpl"), (double) Integer.parseInt(carnivore) / 100);
+        ratio.put(new String("HerbivoreImpl"), (double) Integer.parseInt(herbivore) / 100);
+        ratio.put(new String("Obstacle"), (double) Integer.parseInt(obstacles) / 100);
+        ratio.put(new String("Water"), (double) Integer.parseInt(water) / 100);
 
 
         double totalFilled = 0;
-        for (Map.Entry<Particle, Double> entry : ratio.entrySet()) {
+        for (Map.Entry<String, Double> entry : ratio.entrySet()) {
             totalFilled += entry.getValue();
         }
 
-        ratio.put(new Land(), (double) 1 - totalFilled);
+        ratio.put(new String("Land"), (double) 1 - totalFilled);
 
         ProportionalHabitatGenerator generator = new ProportionalHabitatGenerator(ratio, 0, 0, Integer.parseInt(rows), Integer.parseInt(columns), new Random());
         //ProportionalHabitatGenerator generator = new ProportionalHabitatGenerator()

@@ -12,7 +12,7 @@ public abstract class Animal extends Particle implements Digestion, MovingPartic
     protected MovingParticle movement;
     protected double energy;
     protected double strength; //TODO How to initiate!!!
-    AddressImpl address;
+
     private double weight;
     private double stamina;
     private VelocityVector velocity;
@@ -132,11 +132,5 @@ public abstract class Animal extends Particle implements Digestion, MovingPartic
         return energy > (stamina * horniness);
     }
 
-    public AddressImpl getAddress() {
-        return address;
-    }
 
-    public void setAddress(AddressImpl address) {
-        this.address = address;
-    }
 }

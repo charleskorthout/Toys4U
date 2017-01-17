@@ -31,8 +31,8 @@ public class RandomHabitatGenerator implements HabitatGenerator {
         this.columns = columns;
     }
 
-    public static HashMap<Particle, Double> getRandomProportions() {
-        HashMap < Particle, Double > weights = new HashMap();
+    public static HashMap<String, Double> getRandomProportions() {
+        HashMap<String, Double> weights = new HashMap();
         double[] values = new double[6];
         double sum = 0.0;
         for(int i = 0; i< 6;i++)
@@ -40,17 +40,17 @@ public class RandomHabitatGenerator implements HabitatGenerator {
             values[i] = Math.random();
             sum = sum + values[i];
         }
-        weights.put(new PlantImpl(),values[0]/sum);
-        weights.put(new Water(),values[1]/sum);
-        weights.put(new OmnivoreImpl(),values[2]/sum);
-        weights.put(new CarnivoreImpl(),values[3]/sum);
-        weights.put(new HerbivoreImpl(),values[4]/sum);
-        weights.put(new Obstacle(),values[5]/sum);
+        weights.put(new String("Plant"), values[0] / sum);
+        weights.put(new String("Water"), values[1] / sum);
+        weights.put(new String("OmnivoreImpl"), values[2] / sum);
+        weights.put(new String("CarnivoreImpl"), values[3] / sum);
+        weights.put(new String("HerbivoreImpl"), values[4] / sum);
+        weights.put(new String("Obstacle"), values[5] / sum);
         return weights;
     }
 
     private Habitat createRandom(int worldid, int habitatid, int rows, int columns) {
-        HashMap<Particle, Double> weights = getRandomProportions();
+        HashMap<String, Double> weights = getRandomProportions();
         ProportionalHabitatGenerator generator = new ProportionalHabitatGenerator(weights, worldid, habitatid, rows, columns, new Random());
         return generator.generate();
     }

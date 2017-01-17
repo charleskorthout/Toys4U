@@ -1,9 +1,10 @@
 package Toys4U.Particles;
 import Toys4U.Infrastructure.*;
+import Toys4U.Network.AddressImpl;
 
 public abstract class Particle implements Eatable, State, Revertable, Persistable {
-    
     protected ParticleColor color = ParticleColor.White;
+    AddressImpl address;
         
     /**
      * Return the default particle color
@@ -64,6 +65,12 @@ public abstract class Particle implements Eatable, State, Revertable, Persistabl
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-	
+    public AddressImpl getAddress() {
+        return address;
+    }
+
+    public void setAddress(AddressImpl address) {
+        this.address = address;
+    }
 
 }
